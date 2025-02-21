@@ -25,4 +25,14 @@ authController.post('/login', async (req, res, next) => {
     }
 })
 
+authController.get('/logout', async (req, res, next) => {
+    try {
+        res.clearCookie('accessToken');
+        res.status(200).json({ "status": "success" });
+    }
+    catch (err) {
+        next(err);
+    }
+})
+
 export default authController;

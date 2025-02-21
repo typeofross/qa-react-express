@@ -7,6 +7,9 @@ const postSchema = new mongoose.Schema({
     body: {
         type: String,
     },
+    category: {
+        type: String
+    },
     owner: {
         type: String
     },
@@ -16,11 +19,11 @@ const postSchema = new mongoose.Schema({
     }],
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'like'
+        ref: 'user'
     }],
     dislikes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'dislike'
+        ref: 'user'
     }]
 }, {
     timestamps: {

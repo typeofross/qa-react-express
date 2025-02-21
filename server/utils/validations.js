@@ -34,6 +34,10 @@ export default {
         body: {
             required: "Body field is required.",
             length: "Body must be between 2 and 1000 letters long."
+        },
+        category: {
+            required: "Category field is required.",
+            length: "Category must be between 2 and 50 letters long."
         }
     }
 }

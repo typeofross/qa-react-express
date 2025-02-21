@@ -4,6 +4,7 @@ import { isOwner } from '../services/auth-service.js';
 
 const postController = express.Router();
 
+// Route to add a new post.
 postController.post('/add', async (req, res, next) => {
     try {
 
@@ -18,6 +19,27 @@ postController.post('/add', async (req, res, next) => {
     }
 })
 
+// Route for rating (like/dislike) a specific post.
+postController.post('/:id/:operation', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const uid = res.locals.userId;
+        const operation = req.params.operation;
+
+        if (operation != 'like' && operation != 'dislike') {
+            throw new Error("Invalid request.");
+        }
+
+        operation == "like" ? await services.post.rate.like(id, uid) : await services.post.rate.dislike(id, uid)
+
+        res.status(200).json({ "status": "success" });
+    }
+    catch (err) {
+        next(err);
+    }
+})
+
+// Route for editing a specific post.
 postController.patch('/:id', isOwner, async (req, res, next) => {
     try {
 
@@ -30,6 +52,7 @@ postController.patch('/:id', isOwner, async (req, res, next) => {
     }
 })
 
+// Route for deleting a specific post.
 postController.delete('/:id', isOwner, async (req, res, next) => {
     try {
         await services.post.delete(req.params.id);

@@ -137,8 +137,6 @@ export async function isOwner(req, res, next) {
     try {
         const userId = res.locals.userId;
 
-        console.log(req.params.id);
-
         const post = await Post.findById(req.params.id);
 
         if (!post) {
