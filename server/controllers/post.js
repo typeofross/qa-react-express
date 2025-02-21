@@ -1,6 +1,6 @@
 import express from 'express';
 import services from '../services/crud-service.js';
-import { isOwner } from '../services/auth-service.js';
+import { isPostOwner } from '../services/auth-service.js';
 
 const postController = express.Router();
 
@@ -40,7 +40,7 @@ postController.post('/:id/:operation', async (req, res, next) => {
 })
 
 // Route for editing a specific post.
-postController.patch('/:id', isOwner, async (req, res, next) => {
+postController.patch('/:id', isPostOwner, async (req, res, next) => {
     try {
 
         const post = await services.post.update(req.body, req.params.id);
@@ -53,7 +53,7 @@ postController.patch('/:id', isOwner, async (req, res, next) => {
 })
 
 // Route for deleting a specific post.
-postController.delete('/:id', isOwner, async (req, res, next) => {
+postController.delete('/:id', isPostOwner, async (req, res, next) => {
     try {
         await services.post.delete(req.params.id);
 

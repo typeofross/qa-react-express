@@ -3,7 +3,7 @@ import Post from '../models/post.js';
 export default {
     get: {
         one(id) {
-            return Post.findById(id);
+            return Post.findById(id).populate('comments');
         },
         latest() {
             return Post.find()
