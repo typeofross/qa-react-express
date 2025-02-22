@@ -18,6 +18,26 @@ commentController.post('/add', async (req, res, next) => {
     }
 })
 
+// Route for rating (like/dislike) a specific comment.
+commentController.post('/:id/:operation', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const uid = res.locals.userId;
+        const operation = req.params.operation;
+
+        if (operation != 'like' && operation != 'dislike') {
+            throw new Error("Invalid request.");
+        }
+
+        operation == "like" ? await services.rate.like(id, uid, "comment") : await services.rate.dislike(id, uid, "comment")
+
+        res.status(200).json({ "status": "success" });
+    }
+    catch (err) {
+        next(err);
+    }
+})
+
 // Route for editing a specific comment.
 commentController.patch('/:id', isCommentOwner, async (req, res, next) => {
     try {

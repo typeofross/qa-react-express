@@ -30,7 +30,7 @@ postController.post('/:id/:operation', async (req, res, next) => {
             throw new Error("Invalid request.");
         }
 
-        operation == "like" ? await services.post.rate.like(id, uid) : await services.post.rate.dislike(id, uid)
+        operation == "like" ? await services.rate.like(id, uid, "post") : await services.rate.dislike(id, uid, "post")
 
         res.status(200).json({ "status": "success" });
     }

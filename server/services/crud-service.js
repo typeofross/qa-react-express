@@ -2,6 +2,7 @@ import ValidationError from "../utils/custom-error.js";
 import validations from '../utils/validations.js';
 import Post from '../models/post.js';
 import Comment from '../models/comment.js';
+import mongoose from "mongoose";
 
 function validatePostInput(req) {
     let errors = [];
@@ -91,71 +92,6 @@ export default {
         async delete(id) {
             await Comment.deleteMany({ postId: id });
             return await Post.findByIdAndDelete(id);
-        },
-
-        rate: {
-            async getPostDetails(id, uid) {
-                const post = await Post.findById(id);
-
-                if (!post) {
-                    throw new Error("ID not found.");
-                }
-
-                const isLiked = post.likes.includes(uid);
-                const isDisliked = post.dislikes.includes(uid);
-
-                return { isLiked, isDisliked };
-            },
-            async like(id, uid) {
-
-                const getPost = await this.getPostDetails(id, uid);
-
-                if (!getPost.isLiked) {
-                    await Post.findByIdAndUpdate(
-                        id,
-                        { $addToSet: { "likes": uid } },
-                    )
-
-                    if (getPost.isDisliked) {
-                        await Post.findByIdAndUpdate(
-                            id,
-                            { $pull: { "dislikes": uid } },
-                        )
-                    }
-                }
-                else {
-                    await Post.findByIdAndUpdate(
-                        id,
-                        { $pull: { "likes": uid } },
-                    )
-                }
-
-            },
-
-            async dislike(id, uid) {
-
-                const getPost = await this.getPostDetails(id, uid);
-
-                if (!getPost.isDisliked) {
-                    await Post.findByIdAndUpdate(
-                        id,
-                        { $addToSet: { "dislikes": uid } },
-                    )
-
-                    if (getPost.isLiked) {
-                        await Post.findByIdAndUpdate(
-                            id,
-                            { $pull: { "likes": uid } },
-                        )
-                    }
-                }
-                else {
-                    await Post.findByIdAndUpdate(
-                        id,
-                        { $pull: { "dislikes": uid } },
-                    )
-                }
-            }
         }
     },
     comment: {
@@ -202,6 +138,74 @@ export default {
             )
 
             return await Comment.findByIdAndDelete(id);
+        }
+    },
+    rate: {
+        async getDetails(id, uid, model) {
+            const record = await model.findById(id);
+
+            if (!record) {
+                throw new Error("ID not found.");
+            }
+
+            const isLiked = record.likes.includes(uid);
+            const isDisliked = record.dislikes.includes(uid);
+
+            return { isLiked, isDisliked };
         },
+        async like(id, uid, model) {
+
+            model = mongoose.model(model);
+
+            const getRecord = await this.getDetails(id, uid, model);
+
+            if (!getRecord.isLiked) {
+                await model.findByIdAndUpdate(
+                    id,
+                    { $addToSet: { "likes": uid } },
+                )
+
+                if (getRecord.isDisliked) {
+                    await model.findByIdAndUpdate(
+                        id,
+                        { $pull: { "dislikes": uid } },
+                    )
+                }
+            }
+            else {
+                await model.findByIdAndUpdate(
+                    id,
+                    { $pull: { "likes": uid } },
+                )
+            }
+
+        },
+
+        async dislike(id, uid, model) {
+
+            model = mongoose.model(model);
+
+            const getRecord = await this.getDetails(id, uid, model);
+
+            if (!getRecord.isDisliked) {
+                await model.findByIdAndUpdate(
+                    id,
+                    { $addToSet: { "dislikes": uid } },
+                )
+
+                if (getRecord.isLiked) {
+                    await model.findByIdAndUpdate(
+                        id,
+                        { $pull: { "likes": uid } },
+                    )
+                }
+            }
+            else {
+                await model.findByIdAndUpdate(
+                    id,
+                    { $pull: { "dislikes": uid } },
+                )
+            }
+        }
     }
 }
