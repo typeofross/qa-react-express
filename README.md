@@ -14,7 +14,7 @@ Get endpoints:\
 
 CRUD endpoints:\
 [POST] /POST/ADD\
-[POST] /:ID/:OPERATION\
+[POST] /POST/:ID/:OPERATION\
 [PATCH] /POST/:ID\
 [DELETE] /POST/:ID\
 [POST] /COMMENT/ADD\

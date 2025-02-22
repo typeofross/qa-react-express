@@ -9,7 +9,15 @@ const commentSchema = new mongoose.Schema({
     },
     postId: {
         type: String
-    }
+    },
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    }],
+    dislikes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    }]
 }, {
     timestamps: {
         createdAt: true,
