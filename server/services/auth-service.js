@@ -1,11 +1,10 @@
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 import User from '../models/user.js';
-import Post from '../models/post.js';
-import Comment from '../models/comment.js';
 import ValidationError from "../utils/custom-error.js";
 import validations from '../utils/validations.js';
 import config from '../config.js';
+import mongoose from 'mongoose';
 
 async function login(req) {
 
@@ -134,40 +133,23 @@ export function isAuth(req, res, next) {
     next();
 }
 
-export async function isPostOwner(req, res, next) {
+export async function isOwner(req, res, next) {
     try {
+        const model = req.baseUrl == '/comment' || req.baseUrl == '/post' ? mongoose.model(req.baseUrl.replace('/', '')) : undefined;
+
+        if (!model) {
+            throw new Error('Invalid request.')
+        }
+
         const userId = res.locals.userId;
 
-        const post = await Post.findById(req.params.id);
+        const record = await model.findById(req.params.id);
 
-        if (!post) {
+        if (!record) {
             throw new Error('ID not found.');
         }
 
-        if (post.owner != userId) {
-            throw new Error('Unauthorized.');
-        }
-
-        next();
-
-    }
-    catch (err) {
-        next(err);
-    }
-}
-
-
-export async function isCommentOwner(req, res, next) {
-    try {
-        const userId = res.locals.userId;
-
-        const comment = await Comment.findById(req.params.id);
-
-        if (!comment) {
-            throw new Error('ID not found.');
-        }
-
-        if (comment.owner != userId) {
+        if (record.owner != userId) {
             throw new Error('Unauthorized.');
         }
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import services from '../services/crud-service.js';
-import { isCommentOwner } from '../services/auth-service.js';
+import { isOwner } from '../services/auth-service.js';
 
 const commentController = express.Router();
 
@@ -39,7 +39,7 @@ commentController.post('/:id/:operation', async (req, res, next) => {
 })
 
 // Route for editing a specific comment.
-commentController.patch('/:id', isCommentOwner, async (req, res, next) => {
+commentController.patch('/:id', isOwner, async (req, res, next) => {
     try {
 
         const post = await services.comment.update(req.body, req.params.id);
@@ -52,7 +52,7 @@ commentController.patch('/:id', isCommentOwner, async (req, res, next) => {
 })
 
 // Route for deleting a specific comment.
-commentController.delete('/:id', isCommentOwner, async (req, res, next) => {
+commentController.delete('/:id', isOwner, async (req, res, next) => {
     try {
         await services.comment.delete(req.params.id);
 
