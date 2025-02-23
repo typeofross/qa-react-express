@@ -162,15 +162,11 @@ export default {
             if (!getRecord.isLiked) {
                 await model.findByIdAndUpdate(
                     id,
-                    { $addToSet: { "likes": uid } },
+                    {
+                        $addToSet: { "likes": uid },
+                        $pull: { "dislikes": uid }
+                    }
                 )
-
-                if (getRecord.isDisliked) {
-                    await model.findByIdAndUpdate(
-                        id,
-                        { $pull: { "dislikes": uid } },
-                    )
-                }
             }
             else {
                 await model.findByIdAndUpdate(
@@ -190,15 +186,11 @@ export default {
             if (!getRecord.isDisliked) {
                 await model.findByIdAndUpdate(
                     id,
-                    { $addToSet: { "dislikes": uid } },
+                    {
+                        $addToSet: { "dislikes": uid },
+                        $pull: { "likes": uid }
+                    },
                 )
-
-                if (getRecord.isLiked) {
-                    await model.findByIdAndUpdate(
-                        id,
-                        { $pull: { "likes": uid } },
-                    )
-                }
             }
             else {
                 await model.findByIdAndUpdate(
