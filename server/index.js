@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import routes from './routes.js';
 import errorHandler from './middleware/error-handler.js';
@@ -10,7 +11,8 @@ const port = config.port;
 
 try {
     await mongoose.connect(config.db);
-    
+
+    app.use(cors());
     app.use(cookieParser());
     app.use(express.json());
     app.use(routes);
