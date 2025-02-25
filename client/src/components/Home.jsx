@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import services from '../../services/fetch.js';
+import HomeLatestItems from './partials/HomeLatestItems.jsx';
+import SearchInputField from './partials/SearchInputField.jsx';
+import { useLocation } from 'react-router';
 
 function Home() {
   const [data, setData] = useState([]);
+
+  // From state when redirecting from Search to Home if value is empty (so it can hold the focus on the input)
+  const location = useLocation();
+  const from = location.state?.from;
 
   useEffect(() => {
     fetchData()
@@ -26,14 +33,17 @@ function Home() {
 
   return (
     <div>
-      <h1 className="mb-[30px]">LATEST</h1>
+      <div className="grid grid-cols-1 md:grid-cols-[100px_300px] justify-between items-center mb-[30px]">
+        <div className="hidden md:block">
+          <h1>LATEST</h1>
+        </div>
+        <div>
+          <SearchInputField focused={from ? true : false} fromHome={true} />
+        </div>
+      </div>
 
       {data.map(entry =>
-        <div className="grid grid-cols-[1fr_7fr_20px] gap-3 pt-2 pb-2 justify-items-start text-sm md:text-lg" key={entry._id}>
-          <div>{new Date(entry.createdAt).toLocaleDateString()}</div>
-          <div>{entry.title}</div>
-          <div className="justify-self-end hidden md:block">{entry.comments.length}</div>
-        </div>
+        <HomeLatestItems key={entry._id} entry={entry} />
       )}
     </div>
   );
