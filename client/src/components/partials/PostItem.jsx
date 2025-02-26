@@ -1,6 +1,4 @@
 function PostItem(props) {
-
-  console.log(props);
   return (
     <>
       <div className="grid grid-cols-2 mb-10 text-xs md:text-lg">

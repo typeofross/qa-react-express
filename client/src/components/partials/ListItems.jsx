@@ -4,6 +4,10 @@ import CommentsRating from './ListItemsCommentsRating.jsx';
 function ListItems(props) {
   const navigate = useNavigate();
 
+  let body = props.entry.body.split(" ").slice(0, 40).join(" ");
+
+  body == props.entry.body ? body : body += "...";
+
   const redirectHandler = () => {
     navigate(`/post/${props.entry._id}`);
   }
@@ -22,7 +26,8 @@ function ListItems(props) {
             </div>
           </div>
         </div>
-        <div className="md:mb-10 md:mt-3 md:text-xl">{props.entry.title}</div>
+        <div className="md:mb-1 md:mt-3 md:text-xl">{props.entry.title}</div>
+        <div className="md:mb-10 md:text-sm">{body}</div>
         <CommentsRating entry={props.entry} className="mt-2 mb-5 md:hidden" />
       </div>
     </>

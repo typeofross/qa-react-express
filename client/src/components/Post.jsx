@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import PostItem from './partials/PostItem.jsx';
 
 function Post() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState('');
   const params = useParams();
 
   useEffect(() => {
