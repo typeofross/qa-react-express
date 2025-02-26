@@ -24,7 +24,7 @@ function SearchInputField(props) {
     timeoutId.current = setTimeout(() => {
 
       // If the search value is empty load Home component
-      searchValue == " " || searchValue == "" || searchValue.trim() == "" ?
+      !searchValue.trim() ?
         navigate('/', { state: { from: 'search' } }) :
 
         // Otherwise if search is not initiated from Home, send back props from Child (this) to parent (Search)

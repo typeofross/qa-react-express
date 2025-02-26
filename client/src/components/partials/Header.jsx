@@ -17,6 +17,7 @@ function Header() {
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-4">
           <NavLink to='/'>HOME</NavLink>
+          <NavLink to='/catalog'>CATALOG</NavLink>
           <NavLink to='/login'>LOGIN</NavLink>
           <NavLink to='/register'>REGISTER</NavLink>
         </div>

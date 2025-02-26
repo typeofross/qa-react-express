@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import services from '../../services/fetch.js';
-import HomeLatestItems from './partials/HomeLatestItems.jsx';
+import ListItems from './partials/ListItems.jsx';
 import SearchInputField from './partials/SearchInputField.jsx';
 import { useLocation } from 'react-router';
 
@@ -43,7 +43,7 @@ function Home() {
       </div>
 
       {data.map(entry =>
-        <HomeLatestItems key={entry._id} entry={entry} />
+        <ListItems key={entry._id} entry={entry} />
       )}
     </div>
   );
