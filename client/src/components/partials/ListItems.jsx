@@ -13,7 +13,7 @@ function ListItems(props) {
   }
   return (
     <>
-      <div onClick={redirectHandler} className="cursor-pointer hover:bg-gray-900 hover:rounded-lg hover:mt-5 hover:mb-5">
+      <div onClick={redirectHandler} className="cursor-pointer hover:border-l-5 hover:border-gray-300 hover:pl-5">
         <div className="text-xs mb-2">
 
           <div className="md:grid md:grid-cols-[auto_1fr]">
@@ -27,7 +27,7 @@ function ListItems(props) {
           </div>
         </div>
         <div className="md:mb-1 md:mt-3 md:text-xl">{props.entry.title}</div>
-        <div className="md:mb-10 md:text-sm">{body}</div>
+        <div className="text-xs md:mb-10 md:text-sm">{body}</div>
         <CommentsRating entry={props.entry} className="mt-2 mb-5 md:hidden" />
       </div>
     </>

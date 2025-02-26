@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import services from '../../services/fetch.js';
 import ListItems from './partials/ListItems.jsx';
 import SearchInputField from './partials/SearchInputField.jsx';
-import { useLocation } from 'react-router';
+import { NavLink, useLocation } from 'react-router';
+import CatalogItemsHome from './partials/CatalogItemsHome.jsx';
 
 function Home() {
   const [data, setData] = useState([]);
@@ -41,7 +42,10 @@ function Home() {
           <SearchInputField focused={from ? true : false} fromHome={true} />
         </div>
       </div>
-
+      < div className='hidden md:block md:float-right pl-7 pb-7'>
+        <CatalogItemsHome />
+        <NavLink to='/catalog' className="text-xs float-end hover:text-indigo-600">🠲 view full catalog</NavLink>
+      </div>
       {data.map(entry =>
         <ListItems key={entry._id} entry={entry} />
       )}
