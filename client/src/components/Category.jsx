@@ -6,7 +6,7 @@ function Category() {
   return (
     <>
       <title>Category</title>
-      <NavLink to='/catalog'>↵ BACK TO CATALOG</NavLink>
+      <NavLink to='/'>↵ BACK TO HOME</NavLink>
 
       <div className="mt-[30px]"></div>
       {/* To do category */}

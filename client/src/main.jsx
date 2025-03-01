@@ -7,7 +7,6 @@ import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import AuthLayout from './components/layouts/AuthLayout.jsx';
 import NotFound from './components/NotFound.jsx';
-import Catalog from './components/Catalog.jsx';
 import Category from './components/Category.jsx';
 import Post from './components/Post.jsx';
 
@@ -18,7 +17,6 @@ createRoot(document.getElementById('root')).render(
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/catalog' element={<Catalog />} />
         <Route path='/post/:id' element={<Post />} />
         <Route path='/category/:name/page/:number' element={<Category />} />
       </Route>

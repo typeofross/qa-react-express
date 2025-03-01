@@ -46,7 +46,7 @@ function SearchInputField(props) {
           onChange={onInputChangeHandler}
           placeholder="Search for posts..."
           autoComplete="off"
-          className="w-full rounded-md py-2 ps-3 pe-10 border-white bg-gray-900 text-xs"
+          className="w-full rounded-sm py-2 ps-3 pe-10 border-black border-1 bg-white text-xs"
           ref={inputRef}
         />
 

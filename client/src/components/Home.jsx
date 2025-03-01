@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import services from '../../services/fetch.js';
 import ListItems from './partials/ListItems.jsx';
 import SearchInputField from './partials/SearchInputField.jsx';
-import { NavLink, useLocation } from 'react-router';
-import CatalogItemsHome from './partials/CatalogItemsHome.jsx';
+import { useLocation } from 'react-router';
+import CatalogItems from './partials/CatalogItems.jsx';
 
 function Home() {
   const [data, setData] = useState([]);
@@ -33,23 +33,23 @@ function Home() {
   }
 
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-[100px_300px] justify-between items-center mb-[30px]">
-        <div className="hidden md:block">
-          <h1>LATEST</h1>
+    <>
+      <div className="sm:w-[350px]">
+        <SearchInputField focused={from ? true : false} fromHome={true} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[200px_auto] mt-8 gap-3">
+        <div className="md:border-r-1 md:border-gray-200">
+          <p className="text-xs mb-4">CATEGORIES:</p>
+          <CatalogItems />
         </div>
-        <div>
-          <SearchInputField focused={from ? true : false} fromHome={true} />
+        <div className="mt-5 md:mt-0">
+          <p className="text-xs mb-4">NEWEST POSTS:</p>
+          {data.map(entry =>
+            <ListItems key={entry._id} entry={entry} />
+          )}
         </div>
       </div>
-      < div className='hidden md:block md:float-right pl-7 pb-7'>
-        <CatalogItemsHome />
-        <NavLink to='/catalog' className="text-xs float-end hover:text-indigo-600">🠲 view full catalog</NavLink>
-      </div>
-      {data.map(entry =>
-        <ListItems key={entry._id} entry={entry} />
-      )}
-    </div>
+    </>
   );
 }
 
