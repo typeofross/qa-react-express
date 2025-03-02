@@ -8,7 +8,9 @@ export default {
         category: serverBaseUrl + "/get/category/",
         search: serverBaseUrl + "/get/search/"
     },
-
+    post: {
+        login: serverBaseUrl + "/auth/login"
+    },
     color(n) {
         return n == 3 ? "green" :
             n == 4 ? "yellow" : "blue"

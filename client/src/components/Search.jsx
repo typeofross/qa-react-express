@@ -11,7 +11,7 @@ function Search() {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [searchValue])
 
   const fetchData = async () => {
     try {
@@ -24,6 +24,7 @@ function Search() {
       setData(response.message);
 
     } catch (err) {
+      setData([])
       console.error(err)
     }
   }
