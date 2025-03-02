@@ -20,5 +20,10 @@ export default {
         const req = await fetch(endpoints.get.category + name + "/page/" + page);
         const res = await req.json();
         return res;
+    },
+    async search(text) {
+        const req = await fetch(endpoints.get.search + text);
+        const res = await req.json();
+        return res;
     }
 }

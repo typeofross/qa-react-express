@@ -65,4 +65,19 @@ getController.get('/catalog', async (req, res, next) => {
     }
 })
 
+getController.get('/search/:text', async (req, res, next) => {
+    try {
+        const posts = await services.get.search(req.params.text);
+
+        if (!posts || posts.length == 0) {
+            throw new Error("No posts to show.")
+        }
+
+        res.status(200).json({ "status": "success", "message": posts });
+    }
+    catch (err) {
+        next(err);
+    }
+})
+
 export default getController;  

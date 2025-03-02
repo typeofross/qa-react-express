@@ -38,6 +38,16 @@ export default {
         },
         postCount(name) {
             return Post.countDocuments({ category: new RegExp(`^${name}$`, 'i') });
+        },
+        search(text) {
+            return Post.find({
+                $or: [
+                    { title: new RegExp(`${text}`, 'i') },
+                    { body: new RegExp(`${text}`, 'i') },
+                ]
+            })
+                .sort({ createdAt: -1 })
+                .populate('owner', 'username')
         }
     }
 }
