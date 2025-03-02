@@ -12,13 +12,11 @@ function Header() {
     <nav className="md:mt-[30px]">
       <div className="flex justify-between items-center">
 
-        <div className="font-bold">Q&A</div>
+        <NavLink to='/' className="font-bold"><img src="/src/assets/img/logo.png" className="h-15" /></NavLink>
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-4">
-          <NavLink to='/'>HOME</NavLink>
-          <NavLink to='/login'>LOGIN</NavLink>
-          <NavLink to='/register'>REGISTER</NavLink>
+          <NavLink to='/login' className="p-2 border-2 rounded-sm border-green-700 text-green-700 font-medium hover:bg-green-700 hover:text-white">CREATE POST</NavLink>
         </div>
 
         {/* Mobile Menu Button (Hidden on Desktop) */}

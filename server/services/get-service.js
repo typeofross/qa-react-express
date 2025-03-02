@@ -9,6 +9,7 @@ export default {
             return Post.find()
                 .limit(10)
                 .sort({ createdAt: -1 })
+                .populate('owner', 'username')
         },
         catalog() {
             return Post.aggregate([{

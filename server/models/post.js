@@ -11,7 +11,8 @@ const postSchema = new mongoose.Schema({
         type: String
     },
     owner: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
