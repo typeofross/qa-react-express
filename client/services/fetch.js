@@ -38,5 +38,18 @@ export default {
         const req = await fetch(endpoints.post.login, requestOptions);
         const res = await req.json();
         return res;
+    },
+    async register(data) {
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        };
+
+        const req = await fetch(endpoints.post.register, requestOptions);
+        const res = await req.json();
+        return res;
     }
 }

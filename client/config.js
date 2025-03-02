@@ -9,10 +9,7 @@ export default {
         search: serverBaseUrl + "/get/search/"
     },
     post: {
-        login: serverBaseUrl + "/auth/login"
-    },
-    color(n) {
-        return n == 3 ? "green" :
-            n == 4 ? "yellow" : "blue"
+        login: serverBaseUrl + "/auth/login",
+        register: serverBaseUrl + "/auth/register"
     }
 }
