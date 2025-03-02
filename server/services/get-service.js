@@ -27,14 +27,17 @@ export default {
                 }
             }])
         },
-        category(name, number) {
+        category(name, number, limit) {
 
             const page = parseInt(number) || 1;
-            const limit = 10;
             return Post.find({ category: new RegExp(`^${name}$`, 'i') })
                 .skip((page - 1) * limit)
                 .limit(limit)
                 .sort({ createdAt: -1 })
+                .populate('owner', 'username')
+        },
+        postCount(name) {
+            return Post.countDocuments({ category: new RegExp(`^${name}$`, 'i') });
         }
     }
 }

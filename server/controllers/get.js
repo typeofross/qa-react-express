@@ -35,13 +35,15 @@ getController.get('/post/:id', async (req, res, next) => {
 
 getController.get('/category/:name/page/:number', async (req, res, next) => {
     try {
-        const posts = await services.get.category(req.params.name, req.params.number);
+        const postsPerPage = 10;
+        const posts = await services.get.category(req.params.name, req.params.number, postsPerPage);
+        const postCount = await services.get.postCount(req.params.name);
 
         if (!posts || posts.length == 0) {
             throw new Error("No posts to show.")
         }
 
-        res.status(200).json({ "status": "success", "message": posts });
+        res.status(200).json({ "status": "success", "posts": postCount, "limit": postsPerPage, "message": posts });
     }
     catch (err) {
         next(err);

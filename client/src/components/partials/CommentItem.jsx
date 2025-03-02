@@ -3,7 +3,7 @@ import config from '/config.js';
 function CommentItem({ props }) {
   const date = new Date(props.createdAt).toDateString();
   const time = new Date(props.createdAt).toLocaleTimeString();
-  let classValues = `grid place-items-center w-10 h-10 rounded-full bg-${config.color(props.owner.username.length)}-300`;
+  let classValues = `grid place-items-center w-10 h-10 rounded-full bg-${config.color(props.owner.username.length)}-300 border-1 border-gray-300`;
 
   return (
     <>

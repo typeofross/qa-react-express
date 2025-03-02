@@ -15,5 +15,10 @@ export default {
         const req = await fetch(endpoints.get.post + id);
         const res = await req.json();
         return res;
+    },
+    async getCategory(name, page) {
+        const req = await fetch(endpoints.get.category + name + "/page/" + page);
+        const res = await req.json();
+        return res;
     }
 }

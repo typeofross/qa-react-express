@@ -20,7 +20,7 @@ function PostItem(props) {
         {props.post.body}
       </article>
 
-      <div className="mt-8 text-xl pl-5 bg-gray-100 border-1 border-gray-200 rounded-sm">COMMENTS:</div>
+      {props.post.comments.length ? <div className="mt-8 text-xl pl-5 bg-gray-100 border-1 border-gray-200 rounded-sm">COMMENTS:</div> : ""}
 
       <div className="mt-5">
         {props.post.comments.map(comment => {
