@@ -1,18 +1,9 @@
-import { useRef, useEffect } from "react"
+import { useRef } from "react"
 import { useNavigate } from "react-router";
 
-function SearchInputField(props) {
-  const inputRef = useRef(null);
+function SearchInputField() {
   const timeoutId = useRef(null);
   const navigate = useNavigate();
-
-  // Checks if it should be focused and sets the value.
-  useEffect(() => {
-    if (props.focused && inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.value = props.searchValue ?? "";
-    }
-  }, [props.focused]);
 
   const onInputChangeHandler = (e) => {
     const searchValue = e.target.value;
@@ -23,15 +14,11 @@ function SearchInputField(props) {
 
     timeoutId.current = setTimeout(() => {
 
-      // If the search value is empty load Home component
+      // If the search value is empty load go back to previous view.
       !searchValue.trim() ?
-        navigate('/', { state: { from: 'search' } }) :
+        navigate(-1) :
 
-        // Otherwise if search is not initiated from Home, send back props from Child (this) to parent (Search)
-        !props.fromHome ? props.onDataChange(searchValue) :
-
-          // Or, if it's initiated from Home, load Search component and pass the state of the search value.
-          navigate('/search', { state: { "searchValue": searchValue } });
+        navigate('/search', { state: { "searchValue": searchValue } });
     }, 300);
 
   }
@@ -47,7 +34,6 @@ function SearchInputField(props) {
           placeholder="Search for posts..."
           autoComplete="off"
           className="w-full rounded-sm py-2 ps-3 pe-10 border-black border-1 bg-white text-xs"
-          ref={inputRef}
         />
 
         <span className="absolute end-1 inset-y-0 grid w-7 place-content-center">
