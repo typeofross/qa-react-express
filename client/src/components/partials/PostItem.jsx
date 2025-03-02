@@ -1,7 +1,9 @@
-function PostItem(props) {
+import CommentItem from './CommentItem.jsx';
 
+function PostItem(props) {
   const date = new Date(props.post.createdAt).toDateString();
   const time = new Date(props.post.createdAt).toLocaleTimeString();
+
   return (
     <>
       <div className="grid grid-cols-2 mb-10 text-md md:text-2xl">
@@ -18,12 +20,11 @@ function PostItem(props) {
         {props.post.body}
       </article>
 
-      <div className="mt-8 text-xl pl-5 bg-gray-100 border-l-3 border-indigo-600">COMMENTS:</div>
+      <div className="mt-8 text-xl pl-5 bg-gray-100 border-1 border-gray-200 rounded-sm">COMMENTS:</div>
 
       <div className="mt-5">
-        {/* comments here */}
         {props.post.comments.map(comment => {
-          return <p>{comment.body}</p>;
+          return <CommentItem props={comment} key={comment._id} />
         })}
       </div>
     </>

@@ -3,7 +3,15 @@ import Post from '../models/post.js';
 export default {
     get: {
         one(id) {
-            return Post.findById(id).populate('comments');
+            return Post.findById(id)
+                .populate('owner', 'username')
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'owner',
+                        select: 'username',
+                    }
+                })
         },
         latest() {
             return Post.find()
