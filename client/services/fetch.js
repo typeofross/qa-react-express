@@ -72,13 +72,27 @@ export default {
         const res = await req.json();
         return res;
     },
+    async update(data, id) {
+        const requestOptions = {
+            method: "PATCH",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        };
+
+        const req = await fetch(endpoints.crud.post + id, requestOptions);
+        const res = await req.json();
+        return res;
+    },
     async delete(id) {
         const requestOptions = {
             method: "DELETE",
             credentials: 'include'
         };
 
-        const req = await fetch(endpoints.crud.delete + id, requestOptions);
+        const req = await fetch(endpoints.crud.post + id, requestOptions);
         return req;
     }
 }

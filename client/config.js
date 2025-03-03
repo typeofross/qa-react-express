@@ -10,7 +10,7 @@ export default {
     },
     crud: {
         create: serverBaseUrl + "/post/add",
-        delete: serverBaseUrl + "/post/"
+        post: serverBaseUrl + "/post/"
     },
     auth: {
         logout: serverBaseUrl + "/auth/logout",

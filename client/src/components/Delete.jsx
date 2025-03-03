@@ -27,7 +27,7 @@ function Delete() {
         <h1>This action is irrevirsible. Are you sure you would like to delete the post?</h1>
 
         <button className="bg-red-700 text-white font-bold rounded-sm p-2 mt-10 cursor-pointer" onClick={() => deletePost(params.id)}>YES, DELETE</button>
-        <button className="bg-blue-700 text-white font-bold rounded-sm p-2 ml-3 cursor-pointer" onClick={() => navigate(-1)}>NO, BACK TO POST</button>
+        <button className="bg-blue-700 text-white font-bold rounded-sm p-2 ml-3 cursor-pointer mt-5 md:mt-0" onClick={() => navigate(-1)}>NO, BACK TO POST</button>
       </div>
     </>
   )
