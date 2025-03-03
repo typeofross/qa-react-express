@@ -15,7 +15,8 @@ function Header() {
       </div>
       <div className="justify-self-end self-center">
         {isLogged ?
-          <NavLink to='/create' className={classValue}>CREATE POST</NavLink> :
+          <><NavLink to='/create' className={classValue}>CREATE POST</NavLink>
+            <NavLink to='/logout' className={`${classValue} ml-3 border-red-700  bg-red-700 text-white hover:bg-red-800`}>LOGOUT</NavLink></> :
           <NavLink to='/login' className={classValue}>LOGIN </NavLink>}
       </div>
     </nav>

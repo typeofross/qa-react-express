@@ -36,7 +36,7 @@ export default {
             body: JSON.stringify(data)
         };
 
-        const req = await fetch(endpoints.post.login, requestOptions);
+        const req = await fetch(endpoints.auth.login, requestOptions);
         const res = await req.json();
         return res;
     },
@@ -49,7 +49,12 @@ export default {
             body: JSON.stringify(data)
         };
 
-        const req = await fetch(endpoints.post.register, requestOptions);
+        const req = await fetch(endpoints.auth.register, requestOptions);
+        const res = await req.json();
+        return res;
+    },
+    async logout() {
+        const req = await fetch(endpoints.auth.logout, { credentials: 'include' });
         const res = await req.json();
         return res;
     },

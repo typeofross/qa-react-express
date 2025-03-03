@@ -9,9 +9,12 @@ export default {
         search: serverBaseUrl + "/get/search/"
     },
     post: {
-        login: serverBaseUrl + "/auth/login",
-        register: serverBaseUrl + "/auth/register",
         create: serverBaseUrl + "/post/add"
+    },
+    auth: {
+        logout: serverBaseUrl + "/auth/logout",
+        login: serverBaseUrl + "/auth/login",
+        register: serverBaseUrl + "/auth/register"
     },
     getCookie() {
         return document.cookie.replace('accessToken=');
