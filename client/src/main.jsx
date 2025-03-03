@@ -9,6 +9,8 @@ import AuthLayout from './components/layouts/AuthLayout.jsx';
 import NotFound from './components/NotFound.jsx';
 import Category from './components/Category.jsx';
 import Post from './components/Post.jsx';
+import Create from './components/Create.jsx';
+import UserLayout from './components/layouts/UserLayout.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -24,6 +26,10 @@ createRoot(document.getElementById('root')).render(
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+      </Route>
+
+      <Route element={<UserLayout />}>
+        <Route path="/create" element={<Create />} />
       </Route>
 
       <Route path='*' element={<NotFound />} />

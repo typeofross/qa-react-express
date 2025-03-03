@@ -29,6 +29,7 @@ export default {
     async login(data) {
         const requestOptions = {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -49,6 +50,20 @@ export default {
         };
 
         const req = await fetch(endpoints.post.register, requestOptions);
+        const res = await req.json();
+        return res;
+    },
+    async create(data) {
+        const requestOptions = {
+            method: "POST",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        };
+
+        const req = await fetch(endpoints.post.create, requestOptions);
         const res = await req.json();
         return res;
     }

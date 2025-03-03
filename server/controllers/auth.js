@@ -7,7 +7,8 @@ authController.post('/register', async (req, res, next) => {
     try {
         const accessToken = await register(req.body);
 
-        res.status(201).json({ "status": "success", "message": accessToken });
+        res.cookie('accessToken', accessToken);
+        res.status(201).json({ "status": "success" });
     }
     catch (err) {
         next(err);
@@ -18,7 +19,8 @@ authController.post('/login', async (req, res, next) => {
     try {
         const accessToken = await login(req.body);
 
-        res.status(200).json({ "status": "success", "message": accessToken });
+        res.cookie('accessToken', accessToken);
+        res.status(200).json({ "status": "success" });
     }
     catch (err) {
         next(err);

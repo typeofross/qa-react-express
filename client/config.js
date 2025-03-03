@@ -10,6 +10,10 @@ export default {
     },
     post: {
         login: serverBaseUrl + "/auth/login",
-        register: serverBaseUrl + "/auth/register"
+        register: serverBaseUrl + "/auth/register",
+        create: serverBaseUrl + "/post/add"
+    },
+    getCookie() {
+        return document.cookie.replace('accessToken=');
     }
 }

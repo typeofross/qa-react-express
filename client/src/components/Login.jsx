@@ -20,8 +20,6 @@ function Login() {
         throw new Error(response.message)
       }
 
-      localStorage.setItem('accesstoken', response.message);
-
       return navigate('/');
 
     } catch (err) {
