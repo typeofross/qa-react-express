@@ -121,6 +121,26 @@ function validateRegisterInput(req) {
     return true;
 }
 
+export function getToken(req, res, next) {
+    try {
+        if (req.cookies.accessToken) {
+            const userId = jwt.verify(req.cookies.accessToken, config.jwtSecret);
+            res.locals['userId'] = userId.data;
+        }
+        else {
+            res.locals['userId'] = false;
+        }
+    }
+    catch (err) {
+        console.error(err);
+        res.locals['userId'] = false;
+    }
+    finally {
+        next();
+    }
+
+}
+
 export function isAuth(req, res, next) {
     if (!req.cookies.accessToken) {
         throw new Error('Unauthorized.');

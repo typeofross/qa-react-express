@@ -12,6 +12,7 @@ import Post from './components/Post.jsx';
 import Create from './components/Create.jsx';
 import UserLayout from './components/layouts/UserLayout.jsx';
 import Logout from './components/Logout.jsx';
+import Delete from './components/Delete.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -32,6 +33,7 @@ createRoot(document.getElementById('root')).render(
       <Route element={<UserLayout />}>
         <Route path="/create" element={<Create />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/delete/:id" element={<Delete />} />
       </Route>
 
       <Route path='*' element={<NotFound />} />

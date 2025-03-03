@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router';
 import CommentItem from './CommentItem.jsx';
 
 function PostItem(props) {
@@ -10,11 +11,23 @@ function PostItem(props) {
         <div className="justify-self-start text-sm">
           {date}, {time}
         </div>
+
         <div className="justify-self-end">
           <span className="text-green-700 font-bold p-1 bg-gray-50 border-1 border-gray-200 rounded-sm">{props.post.likes.length} ▲</span>
           <span className="text-red-700 font-bold ml-2 p-1 bg-gray-50 border-1 border-gray-200 rounded-sm">{props.post.dislikes.length} ▼</span>
         </div>
+
+        {props.post.isOwner ?
+          <>
+            <div>
+              <NavLink to={`/delete/${props.post._id}`} className="w-fit border-2 border-red-700 text-red-700 hover:bg-red-700  font-bold hover:text-white rounded-sm p-2 text-xs">DELETE</NavLink>
+              <NavLink to={`/update/${props.post._id}`} className="w-fit border-2 border-blue-700 text-blue-700 hover:bg-blue-700  font-bold hover:text-white rounded-sm p-2 text-xs ml-2">UPDATE</NavLink>
+            </div>
+          </>
+          : ""}
+
       </div>
+
       <h1 className="text-2xl">{props.post.title}</h1>
       <article className="mt-5">
         {props.post.body}

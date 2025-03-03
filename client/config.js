@@ -8,8 +8,9 @@ export default {
         category: serverBaseUrl + "/get/category/",
         search: serverBaseUrl + "/get/search/"
     },
-    post: {
-        create: serverBaseUrl + "/post/add"
+    crud: {
+        create: serverBaseUrl + "/post/add",
+        delete: serverBaseUrl + "/post/"
     },
     auth: {
         logout: serverBaseUrl + "/auth/logout",

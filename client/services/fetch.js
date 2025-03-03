@@ -12,7 +12,7 @@ export default {
         return res;
     },
     async getPost(id) {
-        const req = await fetch(endpoints.get.post + id);
+        const req = await fetch(endpoints.get.post + id, { credentials: 'include' });
         const res = await req.json();
         return res;
     },
@@ -68,8 +68,17 @@ export default {
             body: JSON.stringify(data)
         };
 
-        const req = await fetch(endpoints.post.create, requestOptions);
+        const req = await fetch(endpoints.crud.create, requestOptions);
         const res = await req.json();
         return res;
+    },
+    async delete(id) {
+        const requestOptions = {
+            method: "DELETE",
+            credentials: 'include'
+        };
+
+        const req = await fetch(endpoints.crud.delete + id, requestOptions);
+        return req;
     }
 }

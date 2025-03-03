@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import React, { useState } from 'react';
 import services from '../../services/fetch.js';
 
@@ -32,6 +32,8 @@ function Create() {
     return (
         <>
             <title>Create a Post</title>
+
+            <NavLink to='/'>↵ BACK TO HOME</NavLink>
 
             <form action={handleSubmit} className="max-w-xl mx-auto p-8 bg-white rounded-sm mt-15 border-1 border-gray-200">
                 <h2 className="text-2xl font-semibold mb-4">Create</h2>

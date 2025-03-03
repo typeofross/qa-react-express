@@ -20,10 +20,16 @@ getController.get('/latest', async (req, res, next) => {
 
 getController.get('/post/:id', async (req, res, next) => {
     try {
-        const post = await services.get.one(req.params.id);
+        const post = await services.get.one(req.params.id).lean();
 
         if (!post) {
             throw new Error("ID not found.")
+        }
+
+        post.isOwner = false;
+
+        if (post.owner._id == res.locals.userId) {
+            post.isOwner = true;
         }
 
         res.status(200).json({ "status": "success", "message": post });
