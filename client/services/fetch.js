@@ -94,5 +94,14 @@ export default {
 
         const req = await fetch(endpoints.crud.post + id, requestOptions);
         return req;
+    },
+    async rate(id, action) {
+        const requestOptions = {
+            method: "POST",
+            credentials: 'include'
+        };
+
+        const req = await fetch(endpoints.crud.post + id + "/" + action, requestOptions);
+        return req;
     }
 }

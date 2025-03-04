@@ -32,6 +32,17 @@ getController.get('/post/:id', async (req, res, next) => {
             post.isOwner = true;
         }
 
+        post.isLiked = false;
+        post.isDisliked = false;
+
+        if (post.likes.find(x => x == res.locals.userId)) {
+            post.isLiked = true;
+        }
+
+        if (post.dislikes.find(x => x == res.locals.userId)) {
+            post.isDisliked = true;
+        }
+
         res.status(200).json({ "status": "success", "message": post });
     }
     catch (err) {
