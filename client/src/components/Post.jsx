@@ -1,18 +1,19 @@
-import { useNavigate, useParams } from 'react-router';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import config from '/config.js';
 import services from '../../services/fetch.js';
 import PostItem from './partials/PostItem.jsx';
 
 function Post() {
   const [data, setData] = useState('');
+  const [body, setBody] = useState('');
   const [rate, setRate] = useState(false);
-  const navigate = useNavigate();
+  const [error, setError] = useState([]);
   const params = useParams();
 
   useEffect(() => {
     fetchData()
-  }, [rate])
+  }, [rate, body])
 
   const fetchData = async () => {
     try {
@@ -48,13 +49,35 @@ function Post() {
     }
   }
 
+  const handleComment = async (comment) => {
+    try {
+      let postData = {
+        "body": comment,
+        "postId": params.id
+      };
+
+      const response = await services.addComment(postData);
+
+      if (response.status !== "success") {
+        setError(response.message)
+        throw new Error(response.message)
+      }
+
+      setError('');
+      setBody('');
+
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   if (!data) {
     return;
   }
 
   return (
     <>
-      <PostItem post={data} rate={handleRateAction} />
+      <PostItem post={data} rate={handleRateAction} comment={handleComment} error={error} data={body} setData={setBody} />
     </>
   );
 }

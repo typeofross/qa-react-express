@@ -1,4 +1,4 @@
-export default function CommentForm({ handleSubmitComment, data, setData, error, setError }) {
+export default function CommentForm({ handleSubmitComment, data, setData, error }) {
     return (
         <>
             <form action={handleSubmitComment}>
@@ -11,7 +11,6 @@ export default function CommentForm({ handleSubmitComment, data, setData, error,
                         name="body"
                         rows="5"
                         value={data.body}
-                        onFocus={() => setError('')}
                         onChange={e => { setData({ "body": e.target.value }) }}
                         required
                         className="border rounded w-full py-2 px-3 text-gray-700"

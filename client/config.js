@@ -12,6 +12,9 @@ export default {
         create: serverBaseUrl + "/post/add",
         post: serverBaseUrl + "/post/"
     },
+    comment: {
+        add: serverBaseUrl + "/comment/add"
+    },
     auth: {
         logout: serverBaseUrl + "/auth/logout",
         login: serverBaseUrl + "/auth/login",

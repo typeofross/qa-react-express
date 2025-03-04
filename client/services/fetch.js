@@ -103,5 +103,19 @@ export default {
 
         const req = await fetch(endpoints.crud.post + id + "/" + action, requestOptions);
         return req;
+    },
+    async addComment(data) {
+        const requestOptions = {
+            method: "POST",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        };
+
+        const req = await fetch(endpoints.comment.add, requestOptions);
+        const res = await req.json();
+        return res;
     }
 }

@@ -2,11 +2,8 @@ import CommentItem from './CommentItem.jsx';
 import CommentForm from './CommentForm.jsx';
 import config from '/config.js'
 import { NavLink } from 'react-router';
-import { useState } from 'react';
 
-function PostItem({ post, rate }) {
-  const [error, setError] = useState([]);
-  const [data, setData] = useState({ body: "" });
+function PostItem({ post, rate, comment, error, data, setData }) {
 
   const date = new Date(post.createdAt).toDateString();
   const time = new Date(post.createdAt).toLocaleTimeString();
@@ -28,7 +25,7 @@ function PostItem({ post, rate }) {
   }
 
   const handleSubmitComment = () => {
-
+    comment(data.body)
   }
 
   return (
@@ -61,7 +58,7 @@ function PostItem({ post, rate }) {
 
       {config.getCookie() ?
 
-        <CommentForm handleSubmitComment={handleSubmitComment} data={data} setData={setData} error={error} setError={setError} />
+        <CommentForm handleSubmitComment={handleSubmitComment} data={data} setData={setData} error={error} />
 
         : ""}
 
