@@ -1,7 +1,13 @@
 import CommentItem from './CommentItem.jsx';
+import CommentForm from './CommentForm.jsx';
+import config from '/config.js'
 import { NavLink } from 'react-router';
+import { useState } from 'react';
 
 function PostItem({ post, rate }) {
+  const [error, setError] = useState([]);
+  const [data, setData] = useState({ body: "" });
+
   const date = new Date(post.createdAt).toDateString();
   const time = new Date(post.createdAt).toLocaleTimeString();
   const likeButtonDefault = `text-green-700 font-bold p-1 bg-gray-50 border-1 border-gray-200 rounded-sm`;
@@ -19,6 +25,10 @@ function PostItem({ post, rate }) {
 
   if (post.isDisliked) {
     dislikeButtonStyle = dislikeButtonSelected;
+  }
+
+  const handleSubmitComment = () => {
+
   }
 
   return (
@@ -49,13 +59,23 @@ function PostItem({ post, rate }) {
         {post.body}
       </article>
 
-      {post.comments.length ? <div className="mt-8 text-xl pl-5 bg-gray-100 border-1 border-gray-200 rounded-sm">COMMENTS:</div> : ""}
+      {config.getCookie() ?
 
-      <div className="mt-5">
-        {post.comments.map(comment => {
-          return <CommentItem props={comment} key={comment._id} />
-        })}
-      </div>
+        <CommentForm handleSubmitComment={handleSubmitComment} data={data} setData={setData} error={error} setError={setError} />
+
+        : ""}
+
+      {post.comments.length ?
+        <>
+          <div className="mt-8 text-xl pl-5 bg-gray-100 border-1 border-gray-200 rounded-sm">COMMENTS:</div>
+
+          <div className="mt-5">
+            {post.comments.map(comment => {
+              return <CommentItem props={comment} key={comment._id} />
+            })}
+          </div>
+        </>
+        : ""}
     </>
   )
 }
