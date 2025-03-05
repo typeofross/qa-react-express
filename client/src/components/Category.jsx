@@ -1,8 +1,8 @@
 import { NavLink, useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import ListItems from './partials/ListItems.jsx';
-import services from '../../services/fetch.js';
-import Pagination from './partials/Pagination.jsx';
+import ListItems from '/src/components/partials/ListItems.jsx';
+import services from '/services/fetch.js';
+import Pagination from '/src/components/partials/Pagination.jsx';
 
 function Category() {
   const params = useParams();

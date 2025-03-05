@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import services from '../../services/fetch.js';
-import ListItems from "./partials/ListItems.jsx";
+import services from '/services/fetch.js';
+import ListItems from "/src/components/partials/ListItems.jsx";
 
 function Search() {
   const location = useLocation();
@@ -10,10 +10,10 @@ function Search() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetchData()
+    getSearch()
   }, [searchValue])
 
-  const fetchData = async () => {
+  const getSearch = async () => {
     try {
       const response = await services.get('search', searchValue);
 

@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router';
 import React, { useState } from 'react';
-import services from '../../services/fetch.js';
-import CreateUpdateForm from './partials/CreateUpdateForm.jsx';
+import services from '/services/fetch.js';
+import CreateUpdateForm from '/src/components/partials/CreateUpdateForm.jsx';
 
 function Create() {
     const [error, setError] = useState([]);

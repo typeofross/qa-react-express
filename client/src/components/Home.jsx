@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import services from '../../services/fetch.js';
-import ListItems from './partials/ListItems.jsx';
-import CatalogItems from './partials/CatalogItems.jsx';
+import services from '/services/fetch.js';
+import ListItems from '/src/components/partials/ListItems.jsx';
+import CatalogItems from '/src/components/partials/CatalogItems.jsx';
 
 const styles = {
   div1: "grid grid-cols-1 md:grid-cols-[200px_auto] mt-8 gap-3",

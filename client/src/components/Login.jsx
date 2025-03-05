@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router';
 import React, { useState } from 'react';
-import services from '../../services/fetch.js';
+import services from '/services/fetch.js';
 
 const styles = {
   form: "max-w-md mx-auto p-8 bg-white rounded-sm shadow-2xl mt-30",

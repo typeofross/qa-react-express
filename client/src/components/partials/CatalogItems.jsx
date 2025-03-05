@@ -18,6 +18,7 @@ function CatalogItems() {
   const getCatalog = async () => {
     try {
       const response = await services.get('catalog');
+
       if (response.status !== 'success') {
         throw new Error(response.message)
       }
@@ -30,14 +31,12 @@ function CatalogItems() {
 
   return (
     <>
-      <div className={styles.divContainer}>
+      <div className={styles.div}>
         {data.map(entry => {
-          const link = `/category/${entry._id}/page/1`;
 
-          return <div>
+          return <div key={entry._id}>
             <NavLink
-              to={link}
-              key={entry._id}
+              to={`/category/${entry._id}/page/1`}
               className={styles.navLink}
             >
               <span className={styles.span}>{entry.count}</span> {entry._id}

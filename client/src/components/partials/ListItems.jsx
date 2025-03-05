@@ -13,9 +13,11 @@ function ListItems(props) {
   const navigate = useNavigate();
   const date = new Date(props.entry.createdAt).toDateString();
   const time = new Date(props.entry.createdAt).toLocaleTimeString();
+
   const redirectHandler = () => {
     navigate(`/post/${props.entry._id}`);
   }
+
   return (
     <>
       <div onClick={redirectHandler} className={styles.div1}>

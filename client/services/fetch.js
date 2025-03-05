@@ -1,4 +1,4 @@
-import endpoints from '../config.js';
+import endpoints from '/config.js';
 
 const map = {
     latest: () => { return endpoints.get.latest },

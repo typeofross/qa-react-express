@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import config from '/config.js';
-import services from '../../services/fetch.js';
-import PostItem from './partials/PostItem.jsx';
+import services from '/services/fetch.js';
+import PostItem from '/src/components/partials/PostItem.jsx';
 
 function Post() {
   const [data, setData] = useState('');

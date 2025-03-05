@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import services from '../../services/fetch.js';
+import services from '/services/fetch.js';
 
 function Logout() {
   const navigate = useNavigate();

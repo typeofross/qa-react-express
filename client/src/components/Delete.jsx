@@ -1,5 +1,5 @@
 import { NavLink, useNavigate, useParams } from "react-router";
-import services from '../../services/fetch.js';
+import services from '/services/fetch.js';
 
 const styles = {
   div: "text-center mt-30 p-20 border-5 border-red-700 text-2xl text-red-700",
