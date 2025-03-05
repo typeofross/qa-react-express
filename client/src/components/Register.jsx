@@ -18,16 +18,10 @@ function Register() {
   const [data, setData] = useState({ username: "", email: "", password: "" });
   const navigate = useNavigate();
 
-  async function handleSubmit(formData) {
-    const password = await formData.get('password');
-    const repassword = await formData.get('repassword');
-    const email = await formData.get('email');
-    const username = await formData.get('username');
-
-    setData({ username, email });
-
+  async function submitHandler(e) {
+    e.preventDefault();
     try {
-      const response = await services.auth('register', { username, email, password, repassword });
+      const response = await services.auth('register', data);
 
       if (response.status !== 'success') {
         setError(response.message);
@@ -45,7 +39,7 @@ function Register() {
     <>
       <title>Register</title>
 
-      <form action={handleSubmit} className={styles.form}>
+      <form onSubmit={submitHandler} className={styles.form}>
         <h2 className={styles.h2}>Register</h2>
         <div className="mb-4">
           <label htmlFor="username" className={styles.label}>
@@ -57,7 +51,7 @@ function Register() {
             name="username"
             value={data.username}
             onFocus={() => setError('')}
-            onChange={e => { setData({ "username": e.target.value }) }}
+            onChange={e => { setData({ ...data, "username": e.target.value }) }}
             required
             className={styles.input}
           />
@@ -80,7 +74,7 @@ function Register() {
             name="email"
             value={data.email}
             onFocus={() => setError('')}
-            onChange={e => { setData({ "email": e.target.value }) }}
+            onChange={e => { setData({ ...data, "email": e.target.value }) }}
             required
             className={styles.input}
           />
@@ -102,6 +96,7 @@ function Register() {
             id="password"
             name="password"
             onFocus={() => setError('')}
+            onChange={e => { setData({ ...data, "password": e.target.value }) }}
             required
             className={styles.input}
           />
@@ -123,6 +118,7 @@ function Register() {
             id="repassword"
             name="repassword"
             onFocus={() => setError('')}
+            onChange={e => { setData({ ...data, "repassword": e.target.value }) }}
             required
             className={styles.input}
           />

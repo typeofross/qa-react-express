@@ -14,18 +14,14 @@ const styles = {
 }
 
 function Login() {
-  const [error, setError] = useState(0);
+  const [error, setError] = useState('');
   const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
-  async function handleSubmit(formData) {
-    const password = await formData.get('password');
-    const email = await formData.get('email');
-
-    setData({ password, email });
-
+  async function submitHandler(e) {
+    e.preventDefault();
     try {
-      const response = await services.auth('login', { password, email });
+      const response = await services.auth('login', { "password": data.password, "email": data.email });
 
       if (response.status !== 'success') {
         throw new Error(response.message)
@@ -43,7 +39,7 @@ function Login() {
     <>
       <title>Login</title>
 
-      <form action={handleSubmit} className={styles.form}>
+      <form onSubmit={submitHandler} className={styles.form}>
         <h2 className={styles.h2}>Login</h2>
         <div className="mb-4">
           <label htmlFor="email" className={styles.label}>
@@ -55,7 +51,7 @@ function Login() {
             name="email"
             value={data.email}
             onFocus={() => setError('')}
-            onChange={e => { setData({ "email": e.target.value }) }}
+            onChange={e => { setData({ ...data, "email": e.target.value }) }}
             required
             className={styles.input}
           />
@@ -70,6 +66,7 @@ function Login() {
             id="password"
             name="password"
             onFocus={() => setError('')}
+            onChange={e => { setData({ ...data, "password": e.target.value }) }}
             required
             className={styles.input}
           />
