@@ -15,7 +15,7 @@ function Search() {
 
   const fetchData = async () => {
     try {
-      const response = await services.search(searchValue);
+      const response = await services.get('search', searchValue);
 
       if (response.status !== 'success') {
         throw new Error(response.message)
@@ -34,7 +34,10 @@ function Search() {
       <title>Search</title>
 
       {data.map(entry =>
-        <ListItems key={entry._id} entry={entry} />
+        <ListItems
+          key={entry._id}
+          entry={entry}
+        />
       )}
     </>
   )

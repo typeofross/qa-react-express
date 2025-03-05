@@ -8,7 +8,6 @@ function AuthLayout() {
 
     useEffect(() => {
         if (isLogged) {
-            // If user is logged in they can't access Register/Login pages.
             return navigate('/');
         }
     }, [])

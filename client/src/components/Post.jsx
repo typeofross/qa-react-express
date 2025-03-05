@@ -12,12 +12,12 @@ function Post() {
   const params = useParams();
 
   useEffect(() => {
-    fetchData()
+    getPost()
   }, [rate, body])
 
-  const fetchData = async () => {
+  const getPost = async () => {
     try {
-      const response = await services.getPost(params.id);
+      const response = await services.get('post', params.id, "", { credentials: 'include' });
 
       if (response.status !== 'success') {
         throw new Error(response.message)
@@ -36,7 +36,7 @@ function Post() {
       if (!config.getCookie()) {
         return;
       }
-      const response = await services.rate(params.id, action);
+      const response = await services.crud("ratePost", "", { "id": params.id, "action": action }, "POST");
 
       if (response.status !== 200) {
         throw new Error(response.message)
@@ -56,7 +56,7 @@ function Post() {
         "postId": params.id
       };
 
-      const response = await services.addComment(postData);
+      const response = await services.crud("addComment", postData, "", "POST");
 
       if (response.status !== "success") {
         setError(response.message)
@@ -77,7 +77,14 @@ function Post() {
 
   return (
     <>
-      <PostItem post={data} rate={handleRateAction} comment={handleComment} error={error} data={body} setData={setBody} />
+      <PostItem
+        post={data}
+        rate={handleRateAction}
+        comment={handleComment}
+        error={error}
+        data={body}
+        setData={setBody}
+      />
     </>
   );
 }

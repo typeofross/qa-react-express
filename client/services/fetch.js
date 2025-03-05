@@ -1,120 +1,56 @@
 import endpoints from '../config.js';
 
+const map = {
+    latest: () => { return endpoints.get.latest },
+    catalog: () => { return endpoints.get.catalog },
+    post: (id) => { return endpoints.get.post + id },
+    search: (text) => { return endpoints.get.search + text },
+    category: (name, page) => { return endpoints.get.category + name + "/page/" + page },
+
+    login: () => { return endpoints.auth.login },
+    register: () => { return endpoints.auth.register },
+    logout: () => { return endpoints.auth.logout },
+
+    addPost: () => { return endpoints.crud.create },
+    updatePost: (id) => { return endpoints.crud.post + id },
+    deletePost: (id) => { return endpoints.crud.post + id },
+    ratePost: ({ id, action }) => { return endpoints.crud.post + id + "/" + action },
+    addComment: () => { return endpoints.comment.add }
+}
+
+const requestOptions = (method, data) => {
+    const result = {
+        method,
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    }
+
+    method == "DELETE" || method == "GET" || !data ? delete result.body : "";
+    return result
+}
+
 export default {
-    async getLatest() {
-        const req = await fetch(endpoints.get.latest);
+    async get(type, p1, p2, cred) {
+        const req = await fetch(map[type](p1, p2), cred);
         const res = await req.json();
         return res;
     },
-    async getCatalog() {
-        const req = await fetch(endpoints.get.catalog);
+    async auth(type, data) {
+        const method = type == "logout" ? "GET" : "POST";
+        const req = await fetch(map[type](), requestOptions(method, data));
         const res = await req.json();
         return res;
     },
-    async getPost(id) {
-        const req = await fetch(endpoints.get.post + id, { credentials: 'include' });
-        const res = await req.json();
-        return res;
-    },
-    async getCategory(name, page) {
-        const req = await fetch(endpoints.get.category + name + "/page/" + page);
-        const res = await req.json();
-        return res;
-    },
-    async search(text) {
-        const req = await fetch(endpoints.get.search + text);
-        const res = await req.json();
-        return res;
-    },
-    async login(data) {
-        const requestOptions = {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        };
+    async crud(type, data, p1, method) {
+        const req = await fetch(map[type](p1), requestOptions(method, data));
 
-        const req = await fetch(endpoints.auth.login, requestOptions);
-        const res = await req.json();
-        return res;
-    },
-    async register(data) {
-        const requestOptions = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        };
+        if (type == "deletePost" || type == "ratePost") {
+            return req;
+        }
 
-        const req = await fetch(endpoints.auth.register, requestOptions);
-        const res = await req.json();
-        return res;
-    },
-    async logout() {
-        const req = await fetch(endpoints.auth.logout, { credentials: 'include' });
-        const res = await req.json();
-        return res;
-    },
-    async create(data) {
-        const requestOptions = {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        };
-
-        const req = await fetch(endpoints.crud.create, requestOptions);
-        const res = await req.json();
-        return res;
-    },
-    async update(data, id) {
-        const requestOptions = {
-            method: "PATCH",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        };
-
-        const req = await fetch(endpoints.crud.post + id, requestOptions);
-        const res = await req.json();
-        return res;
-    },
-    async delete(id) {
-        const requestOptions = {
-            method: "DELETE",
-            credentials: 'include'
-        };
-
-        const req = await fetch(endpoints.crud.post + id, requestOptions);
-        return req;
-    },
-    async rate(id, action) {
-        const requestOptions = {
-            method: "POST",
-            credentials: 'include'
-        };
-
-        const req = await fetch(endpoints.crud.post + id + "/" + action, requestOptions);
-        return req;
-    },
-    async addComment(data) {
-        const requestOptions = {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        };
-
-        const req = await fetch(endpoints.comment.add, requestOptions);
         const res = await req.json();
         return res;
     }

@@ -16,7 +16,7 @@ function Create() {
         setData({ title, category, body });
 
         try {
-            const response = await services.create({ title, body, category });
+            const response = await services.crud('addPost', { title, body, category }, "", "POST");
 
             if (response.status !== 'success') {
                 setError(response.message);
@@ -35,7 +35,14 @@ function Create() {
             <title>Create a Post</title>
 
             <NavLink to='/'>↵ BACK TO HOME</NavLink>
-            <CreateUpdateForm handleSubmit={handleSubmit} data={data} setData={setData} error={error} setError={setError} type="Create"/>
+            <CreateUpdateForm
+                handleSubmit={handleSubmit}
+                data={data}
+                setData={setData}
+                error={error}
+                setError={setError}
+                type="Create"
+            />
         </>
     )
 }

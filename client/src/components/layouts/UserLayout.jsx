@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 import config from '/config.js';
 
 function UserLayout() {
@@ -8,7 +8,6 @@ function UserLayout() {
 
     useEffect(() => {
         if (!isLogged) {
-            // Only logged in users can visit.
             return navigate('/');
         }
     }, [])

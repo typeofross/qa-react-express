@@ -2,6 +2,17 @@ import { NavLink, useNavigate } from 'react-router';
 import React, { useState } from 'react';
 import services from '../../services/fetch.js';
 
+const styles = {
+  form: "max-w-md mx-auto p-8 bg-white rounded-sm shadow-2xl mt-30",
+  h2: "text-2xl font-semibold mb-4",
+  label: "block text-gray-700 text-sm font-bold mb-2",
+  input: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+  p1: "text-red-700 text-sm mt-1",
+  button: "bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none cursor-pointer w-[100%]",
+  p2: "mt-3 text-center text-sm text-gray-600",
+  navLink: "underline text-indigo-600"
+}
+
 function Register() {
   const [error, setError] = useState([]);
   const [data, setData] = useState({ username: "", email: "", password: "" });
@@ -16,7 +27,7 @@ function Register() {
     setData({ username, email });
 
     try {
-      const response = await services.register({ username, email, password, repassword });
+      const response = await services.auth('register', { username, email, password, repassword });
 
       if (response.status !== 'success') {
         setError(response.message);
@@ -34,10 +45,10 @@ function Register() {
     <>
       <title>Register</title>
 
-      <form action={handleSubmit} className="max-w-md mx-auto p-8 bg-white rounded-sm shadow-2xl mt-30">
-        <h2 className="text-2xl font-semibold mb-4">Register</h2>
+      <form action={handleSubmit} className={styles.form}>
+        <h2 className={styles.h2}>Register</h2>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
+          <label htmlFor="username" className={styles.label}>
             Username
           </label>
           <input
@@ -48,19 +59,19 @@ function Register() {
             onFocus={() => setError('')}
             onChange={e => { setData({ "username": e.target.value }) }}
             required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={styles.input}
           />
           {error && error.find(x => x.path == "username") ?
             error.map(x => {
               if (x.path == "username") {
-                return <p className="text-red-700 text-sm mt-1">{x.error}</p>
+                return <p className={styles.p1}>{x.error}</p>
               }
             })
             : ""}
         </div>
 
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+          <label htmlFor="email" className={styles.label}>
             Email
           </label>
           <input
@@ -71,19 +82,19 @@ function Register() {
             onFocus={() => setError('')}
             onChange={e => { setData({ "email": e.target.value }) }}
             required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={styles.input}
           />
           {error && error.find(x => x.path == "email") ?
             error.map(x => {
               if (x.path == "email") {
-                return <p className="text-red-700 text-sm mt-1">{x.error}</p>
+                return <p className={styles.p1}>{x.error}</p>
               }
             })
             : ""}
         </div>
 
         <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+          <label htmlFor="password" className={styles.label}>
             Password
           </label>
           <input
@@ -92,19 +103,19 @@ function Register() {
             name="password"
             onFocus={() => setError('')}
             required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={styles.input}
           />
           {error && error.find(x => x.path == "password") ?
             error.map(x => {
               if (x.path == "password") {
-                return <p className="text-red-700 text-sm mt-1">{x.error}</p>
+                return <p className={styles.p1}>{x.error}</p>
               }
             })
             : ""}
         </div>
 
         <div className="mb-6">
-          <label htmlFor="repassword" className="block text-gray-700 text-sm font-bold mb-2">
+          <label htmlFor="repassword" className={styles.label}>
             Confirm password
           </label>
           <input
@@ -113,16 +124,16 @@ function Register() {
             name="repassword"
             onFocus={() => setError('')}
             required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={styles.input}
           />
         </div>
 
         <button
           type="submit"
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none cursor-pointer w-[100%]">
+          className={styles.button}>
           Register
         </button>
-        <p className="mt-3 text-center text-sm text-gray-600">Already have an account? <NavLink to='/login' className="underline text-indigo-600">Login!</NavLink></p>
+        <p className={styles.p2}>Already have an account? <NavLink to='/login' className={styles.navLink}>Login!</NavLink></p>
       </form>
     </>
   )

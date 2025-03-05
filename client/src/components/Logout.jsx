@@ -6,12 +6,12 @@ function Logout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData()
+    logout()
   }, [])
 
-  const fetchData = async () => {
+  const logout = async () => {
     try {
-      const response = await services.logout();
+      const response = await services.auth('logout');
 
       if (response.status !== 'success') {
         throw new Error(response.message)

@@ -15,7 +15,7 @@ function Update() {
 
     const fetchData = async () => {
         try {
-            const response = await services.getPost(params.id);
+            const response = await services.get('post', params.id, "", { credentials: 'include' });
 
             if (response.status !== 'success') {
                 throw new Error(response.message)
@@ -42,7 +42,7 @@ function Update() {
         setData({ title, category, body });
 
         try {
-            const response = await services.update({ title, body, category }, params.id);
+            const response = await services.crud('updatePost', { title, body, category }, params.id, "PATCH");
 
             if (response.status !== 'success') {
                 setError(response.message);
@@ -61,7 +61,14 @@ function Update() {
             <title>Update a Post</title>
 
             <NavLink to='/'>↵ BACK TO HOME</NavLink>
-            <CreateUpdateForm handleSubmit={handleSubmit} data={data} setData={setData} error={error} setError={setError} type="Update" />
+            <CreateUpdateForm
+                handleSubmit={handleSubmit}
+                data={data}
+                setData={setData}
+                error={error}
+                setError={setError}
+                type="Update"
+            />
         </>
     )
 }

@@ -23,6 +23,12 @@ function SearchInputField() {
 
   }
 
+  const styles = {
+    input: "w-full rounded-sm py-2 ps-3 pe-10 border-black border-1 bg-white text-xs",
+    span: "absolute end-1 inset-y-0 grid w-7 place-content-center",
+    button: "text-gray-500"
+  }
+
   return (
     <>
       <div className="relative">
@@ -33,13 +39,13 @@ function SearchInputField() {
           onChange={onInputChangeHandler}
           placeholder="Search for posts..."
           autoComplete="off"
-          className="w-full rounded-sm py-2 ps-3 pe-10 border-black border-1 bg-white text-xs"
+          className={styles.input}
         />
 
-        <span className="absolute end-1 inset-y-0 grid w-7 place-content-center">
+        <span className={styles.span}>
           <button
             type="button"
-            className="text-gray-500"
+            className={styles.button}
           >
 
             <svg
