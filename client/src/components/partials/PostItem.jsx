@@ -17,7 +17,9 @@ function PostItem(
     commentDeleteHandler,
     commentUpdateHandler,
     update,
-    setUpdate
+    setUpdate,
+    commentError,
+    setCommentError
   }) {
 
   const date = new Date(post.createdAt).toDateString();
@@ -104,6 +106,8 @@ function PostItem(
                 update={update}
                 setUpdate={setUpdate}
                 key={comment._id}
+                commentError={commentError}
+                setCommentError={setCommentError}
               />
             })}
           </div>

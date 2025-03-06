@@ -10,7 +10,9 @@ function CommentItem(
     commentDeleteHandler,
     commentUpdateHandler,
     update,
-    setUpdate
+    setUpdate,
+    commentError,
+    setCommentError
   }) {
 
   const [msg, setMsg] = useState(false);
@@ -28,6 +30,7 @@ function CommentItem(
     navLink1: "w-fit border-1 border-red-700 text-red-700 hover:bg-red-700  font-bold hover:text-white rounded-sm p-1 text-xs ml-2",
     navLink2: "w-fit border-1 border-blue-700 text-blue-700 hover:bg-blue-700  font-bold hover:text-white rounded-sm p-1 text-xs ml-2",
     h3: "text-sm font-semibold",
+    p3: "text-red-700 text-xs mt-1",
     p1: "text-xs text-gray-500",
     p2: "text-gray-800 leading-relaxed",
     button3: `text-green-700 font-bold p-1 text-xs bg-gray-50 border-1 border-gray-200 rounded-sm`,
@@ -71,6 +74,7 @@ function CommentItem(
               <input
                 type="text"
                 className="bg-blue-50"
+                onInput={() => setCommentError('')}
                 value={updatedComment.body}
                 onChange={(e) => setCommentUpdate({ body: e.target.value })}
               />
@@ -78,6 +82,14 @@ function CommentItem(
             :
             <p className={styles.p2}>{comment.body}</p>
           }
+
+          {commentError && commentError.find(x => x.path == "body") && update == comment._id ?
+            commentError.map(x => {
+              if (x.path == "body") {
+                return <p className={styles.p3}>{x.error}</p>
+              }
+            })
+            : ""}
           <div className="w-fit justify-self-right">
             <NavLink onClick={() => rate('rateComment', comment._id, 'like')} className={button1}>{comment.likes.length} ▲</NavLink>
             <NavLink onClick={() => rate('rateComment', comment._id, 'dislike')} className={button2}>{comment.dislikes.length} ▼</NavLink>

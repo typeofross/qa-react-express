@@ -11,6 +11,7 @@ function Post() {
   const [updatedComment, setCommentUpdate] = useState('');
   const [rate, setRate] = useState(false);
   const [error, setError] = useState([]);
+  const [commentError, setCommentError] = useState([]);
   const params = useParams();
 
   useEffect(() => {
@@ -93,7 +94,7 @@ function Post() {
       const response = await services.crud('updateComment', updatedComment, e.target.id, "PATCH");
 
       if (response.status !== 'success') {
-        setError(response.message);
+        setCommentError(response.message);
         throw new Error(response.message)
       }
 
@@ -125,6 +126,8 @@ function Post() {
         commentUpdateHandler={commentUpdateHandler}
         update={update}
         setUpdate={setUpdate}
+        commentError={commentError}
+        setCommentError={setCommentError}
       />
     </>
   );
