@@ -24,9 +24,9 @@ function SearchInputField() {
   }
 
   const styles = {
-    input: "w-full rounded-sm py-2 ps-3 pe-10 border-black border-1 bg-white text-xs",
+    input: "w-full rounded-md py-2 ps-3 pe-10 bg-white text-sm shadow-xs focus:outline-none focus:border-none text-center text-xs tracking-widest",
     span: "absolute end-1 inset-y-0 grid w-7 place-content-center",
-    button: "text-gray-500"
+    button: "text-gray-800"
   }
 
   return (
@@ -37,7 +37,7 @@ function SearchInputField() {
           id="search"
           name="search"
           onChange={onInputChangeHandler}
-          placeholder="Search for posts..."
+          placeholder="Search (Ctrl+K)"
           autoComplete="off"
           className={styles.input}
         />

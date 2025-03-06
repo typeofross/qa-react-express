@@ -18,14 +18,29 @@ export default {
                 .limit(10)
                 .sort({ createdAt: -1 })
                 .populate('owner', 'username')
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'owner',
+                        select: 'username',
+                    },
+                    options: {
+                        sort: { createdAt: -1 }
+                    }
+                })
         },
         catalog() {
-            return Post.aggregate([{
-                $group: {
-                    _id: { $toLower: "$category" },
-                    count: { $sum: 1 }
+            return Post.aggregate([
+                {
+                    $group: {
+                        _id: { $toLower: "$category" },
+                        count: { $sum: 1 }
+                    }
+                },
+                {
+                    $sort: { _id: 1 }
                 }
-            }])
+            ]);
         },
         category(name, number, limit) {
 

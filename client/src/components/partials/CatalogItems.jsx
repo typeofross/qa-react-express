@@ -4,7 +4,7 @@ import { NavLink } from 'react-router';
 
 const styles = {
   div: 'grid grid-cols-[1fr_1fr_1fr] md:block',
-  navLink: 'block mb-0.5 p-1.5 hover:bg-indigo-600 hover:text-white',
+  navLink: 'block mb-0.5 p-1.5 hover:bg-rose-50 hover:text-rose-900 text-slate-700',
   span: 'mr-2 pl-2 pr-2 pb-1 pt-1 text-xs font-extrabold rounded-sm bg-white text-black border-1 border-gray-400'
 }
 

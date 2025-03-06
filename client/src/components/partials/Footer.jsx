@@ -2,7 +2,7 @@ function Footer() {
 
   return (
     <>
-      <h1>CREATED @ 2025</h1>
+      <h1 className="pt-5 text-sm">CREATED @ 2025</h1>
     </>
   )
 }
