@@ -33,10 +33,10 @@ function Search() {
     <>
       <title>Search</title>
 
-      {data.map(entry =>
+      {data.map(item =>
         <ListItems
-          key={entry._id}
-          entry={entry}
+          key={item._id}
+          item={item}
         />
       )}
     </>

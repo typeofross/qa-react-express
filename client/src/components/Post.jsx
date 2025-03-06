@@ -5,15 +5,17 @@ import services from '/services/fetch.js';
 import PostItem from '/src/components/partials/PostItem.jsx';
 
 function Post() {
-  const [data, setData] = useState('');
-  const [body, setBody] = useState('');
+  const [postData, setPostData] = useState('');
+  const [update, setUpdate] = useState(false);
+  const [comment, setComment] = useState({ body: "" });
+  const [updatedComment, setCommentUpdate] = useState('');
   const [rate, setRate] = useState(false);
   const [error, setError] = useState([]);
   const params = useParams();
 
   useEffect(() => {
     getPost()
-  }, [rate, body])
+  }, [rate, comment])
 
   const getPost = async () => {
     try {
@@ -23,7 +25,7 @@ function Post() {
         throw new Error(response.message)
       }
 
-      setData(response.message);
+      setPostData(response.message);
 
     } catch (err) {
       console.error(err)
@@ -31,12 +33,13 @@ function Post() {
 
   }
 
-  const handleRateAction = async (action) => {
+  const handleRateAction = async (type, id, action) => {
     try {
       if (!config.getCookie()) {
         return;
       }
-      const response = await services.crud("ratePost", "", { "id": params.id, "action": action }, "POST");
+
+      const response = await services.crud(type, "", { "id": id, "action": action }, "POST");
 
       if (response.status !== 200) {
         throw new Error(response.message)
@@ -49,41 +52,79 @@ function Post() {
     }
   }
 
-  const handleComment = async (comment) => {
+  const handleComment = async (e) => {
+    e.preventDefault();
     try {
-      let postData = {
-        "body": comment,
-        "postId": params.id
-      };
+      comment.postId = params.id;
 
-      const response = await services.crud("addComment", postData, "", "POST");
+      const response = await services.crud("addComment", comment, "", "POST");
 
       if (response.status !== "success") {
         setError(response.message)
         throw new Error(response.message)
       }
 
-      setError('');
-      setBody('');
+      setComment({ body: "" });
 
     } catch (err) {
       console.error(err)
     }
   }
 
-  if (!data) {
+  const commentDeleteHandler = async (id) => {
+    try {
+      const response = await services.crud('deleteComment', "", id, "DELETE");
+
+      if (response.status !== 204) {
+        throw new Error(response.message)
+      }
+
+      setComment({ body: "" })
+
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const commentUpdateHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await services.crud('updateComment', updatedComment, e.target.id, "PATCH");
+
+      if (response.status !== 'success') {
+        setError(response.message);
+        throw new Error(response.message)
+      }
+
+      setComment({ body: "" })
+      setUpdate(update => !update);
+
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if (!postData) {
     return;
   }
 
   return (
     <>
       <PostItem
-        post={data}
+        post={postData}
         rate={handleRateAction}
-        comment={handleComment}
+        handleSubmitComment={handleComment}
         error={error}
-        data={body}
-        setData={setBody}
+        setError={setError}
+        comment={comment}
+        setComment={setComment}
+        updatedComment={updatedComment}
+        setCommentUpdate={setCommentUpdate}
+        commentDeleteHandler={commentDeleteHandler}
+        commentUpdateHandler={commentUpdateHandler}
+        update={update}
+        setUpdate={setUpdate}
       />
     </>
   );

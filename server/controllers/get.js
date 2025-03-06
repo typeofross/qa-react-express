@@ -43,6 +43,25 @@ getController.get('/post/:id', async (req, res, next) => {
             post.isDisliked = true;
         }
 
+        post.comments.forEach(comment => {
+            comment.isLiked = false;
+            comment.isDisliked = false;
+            comment.isOwner = false;
+
+            if (comment.owner._id == res.locals.userId) {
+                comment.isOwner = true;
+            }
+
+            if (comment.likes.find(x => x == res.locals.userId)) {
+                comment.isLiked = true;
+            }
+
+            if (comment.dislikes.find(x => x == res.locals.userId)) {
+                comment.isDisliked = true;
+            }
+
+        })
+
         res.status(200).json({ "status": "success", "message": post });
     }
     catch (err) {

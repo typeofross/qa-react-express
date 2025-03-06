@@ -11,11 +11,14 @@ const map = {
     register: () => { return endpoints.auth.register },
     logout: () => { return endpoints.auth.logout },
 
-    addPost: () => { return endpoints.crud.create },
-    updatePost: (id) => { return endpoints.crud.post + id },
-    deletePost: (id) => { return endpoints.crud.post + id },
-    ratePost: ({ id, action }) => { return endpoints.crud.post + id + "/" + action },
-    addComment: () => { return endpoints.comment.add }
+    addPost: () => { return endpoints.post.create },
+    updatePost: (id) => { return endpoints.post.base + id },
+    deletePost: (id) => { return endpoints.post.base + id },
+    ratePost: ({ id, action }) => { return endpoints.post.base + id + "/" + action },
+    addComment: () => { return endpoints.comment.create },
+    updateComment: (id) => { return endpoints.comment.base + id },
+    rateComment: ({ id, action }) => { return endpoints.comment.base + id + "/" + action },
+    deleteComment: (id) => { return endpoints.comment.base + id }
 }
 
 const requestOptions = (method, data) => {
@@ -47,7 +50,7 @@ export default {
     async crud(type, data, p1, method) {
         const req = await fetch(map[type](p1), requestOptions(method, data));
 
-        if (type == "deletePost" || type == "ratePost") {
+        if (type == "deletePost" || type == "ratePost" || type == "deleteComment" || type == "rateComment") {
             return req;
         }
 

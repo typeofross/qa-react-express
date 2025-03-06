@@ -1,4 +1,12 @@
-export default function CommentForm({ handleSubmitComment, data, setData, error }) {
+export default function CommentForm(
+    {
+        handleSubmitComment,
+        comment,
+        setComment,
+        error,
+        setError
+    }) {
+
     const styles = {
         label: "block text-gray-700 text-sm font-bold mb-2",
         textarea: "border rounded w-full py-2 px-3 text-gray-700",
@@ -8,7 +16,7 @@ export default function CommentForm({ handleSubmitComment, data, setData, error 
 
     return (
         <>
-            <form action={handleSubmitComment}>
+            <form onSubmit={handleSubmitComment}>
                 <div className="mb-2 mt-10">
                     <label htmlFor="body" className={styles.label}>
                         Your comment
@@ -17,8 +25,9 @@ export default function CommentForm({ handleSubmitComment, data, setData, error 
                         id="body"
                         name="body"
                         rows="5"
-                        value={data.body}
-                        onChange={e => { setData({ "body": e.target.value }) }}
+                        value={comment.body}
+                        onFocus={() => setError('')}
+                        onChange={e => { setComment({ "body": e.target.value }) }}
                         required
                         className={styles.textarea}
                     />

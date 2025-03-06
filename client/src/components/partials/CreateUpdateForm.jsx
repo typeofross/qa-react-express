@@ -1,4 +1,13 @@
-export default function CreateUpdateForm({ handleSubmit, data, setData, error, setError, type }) {
+export default function CreateUpdateForm(
+    {
+        handleSubmit,
+        data,
+        setData,
+        error,
+        setError,
+        type
+    }) {
+
     const styles = {
         form: "max-w-xl mx-auto p-8 bg-white rounded-sm mt-15 border-1 border-gray-200",
         h2: "text-2xl font-semibold mb-4",
@@ -10,7 +19,7 @@ export default function CreateUpdateForm({ handleSubmit, data, setData, error, s
 
     return (
         <>
-            <form action={handleSubmit} className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <h2 className={styles.h2}>{type}</h2>
                 <div className="mb-4">
                     <label htmlFor="title" className={styles.label}>
@@ -22,7 +31,7 @@ export default function CreateUpdateForm({ handleSubmit, data, setData, error, s
                         name="title"
                         value={data.title}
                         onFocus={() => setError('')}
-                        onChange={e => { setData({ "title": e.target.value }) }}
+                        onChange={e => { setData({ ...data, "title": e.target.value }) }}
                         required
                         className={styles.input}
                     />
@@ -44,7 +53,7 @@ export default function CreateUpdateForm({ handleSubmit, data, setData, error, s
                         id="category"
                         name="category"
                         value={data.category}
-                        onChange={e => { setData({ "category": e.target.value }) }}
+                        onChange={e => { setData({ ...data, "category": e.target.value }) }}
                         onFocus={() => setError('')}
                         required
                         className={styles.input}
@@ -68,7 +77,7 @@ export default function CreateUpdateForm({ handleSubmit, data, setData, error, s
                         rows="10"
                         value={data.body}
                         onFocus={() => setError('')}
-                        onChange={e => { setData({ "body": e.target.value }) }}
+                        onChange={e => { setData({ ...data, "body": e.target.value }) }}
                         required
                         className={styles.input}
                     />

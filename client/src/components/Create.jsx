@@ -8,15 +8,11 @@ function Create() {
     const [data, setData] = useState({ title: "", body: "", category: "" });
     const navigate = useNavigate();
 
-    async function handleSubmit(formData) {
-        const title = await formData.get('title');
-        const category = await formData.get('category');
-        const body = await formData.get('body');
-
-        setData({ title, category, body });
+    async function handleSubmit(e) {
+        e.preventDefault();
 
         try {
-            const response = await services.crud('addPost', { title, body, category }, "", "POST");
+            const response = await services.crud('addPost', data, "", "POST");
 
             if (response.status !== 'success') {
                 setError(response.message);

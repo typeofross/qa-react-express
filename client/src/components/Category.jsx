@@ -7,7 +7,7 @@ import Pagination from '/src/components/partials/Pagination.jsx';
 function Category() {
   const params = useParams();
   const navigate = useNavigate();
-  const [data, setData] = useState({});
+  const [data, setData] = useState('');
 
   useEffect(() => {
     getCategory()
@@ -27,15 +27,16 @@ function Category() {
       setData(response);
     }
     catch (err) {
+      navigate('/404');
       console.error(err)
     }
   }
 
-  if (!data.message) {
-    return;
-  }
-
   const totalPages = Math.ceil(data.posts / data.limit);
+
+  if (!data) {
+    return "Loading..."
+  }
 
   return (
     <>
@@ -43,10 +44,10 @@ function Category() {
       <NavLink to='/'>↵ BACK TO HOME</NavLink>
 
       <div className="mt-5">
-        {data.message.map(entry =>
+        {data.message.map(item =>
           <ListItems
-            key={entry._id}
-            entry={entry} />
+            key={item._id}
+            item={item} />
         )}
       </div>
 

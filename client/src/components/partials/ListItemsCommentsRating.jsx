@@ -1,4 +1,4 @@
-function CommentsRating(props) {
+function CommentsRating({ item }) {
     const styles = {
         div: "inline text-sm ml-3",
         span1: "text-green-700 font-bold p-1 bg-gray-50 border-1 border-gray-200 rounded-sm",
@@ -10,9 +10,12 @@ function CommentsRating(props) {
     return (
         <>
             <div className={styles.div}>
-                <span className={styles.span1}>{props.entry.likes.length} ▲</span>
-                <span className={styles.span2}>{props.entry.dislikes.length} ▼</span>
-                {props.entry.comments.length ? <span className={styles.span3}>{props.entry.comments.length} <span className={styles.span4}>🗩</span></span> : ""}
+                <span className={styles.span1}>{item.likes.length} ▲</span>
+                <span className={styles.span2}>{item.dislikes.length} ▼</span>
+                {item.comments.length ?
+                    <span className={styles.span3}>{item.comments.length} <span className={styles.span4}>🗩</span></span>
+                    :
+                    ""}
             </div>
         </>
     )

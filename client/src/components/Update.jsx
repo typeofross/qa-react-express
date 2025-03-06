@@ -10,17 +10,16 @@ function Update() {
     const params = useParams();
 
     useEffect(() => {
-        fetchData()
+        getPost()
     }, [])
 
-    const fetchData = async () => {
+    const getPost = async () => {
         try {
             const response = await services.get('post', params.id, "", { credentials: 'include' });
 
             if (response.status !== 'success') {
                 throw new Error(response.message)
             }
-
 
             setData({
                 title: response.message.title,
@@ -34,15 +33,11 @@ function Update() {
 
     }
 
-    async function handleSubmit(formData) {
-        const title = await formData.get('title');
-        const category = await formData.get('category');
-        const body = await formData.get('body');
-
-        setData({ title, category, body });
+    async function handleSubmit(e) {
+        e.preventDefault();
 
         try {
-            const response = await services.crud('updatePost', { title, body, category }, params.id, "PATCH");
+            const response = await services.crud('updatePost', data, params.id, "PATCH");
 
             if (response.status !== 'success') {
                 setError(response.message);

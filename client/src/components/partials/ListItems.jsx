@@ -9,22 +9,23 @@ const styles = {
   span2: "ml-1 p-1 border-1 border-gray-300 rounded-sm pl-2 pr-2"
 }
 
-function ListItems(props) {
+function ListItems({ item }) {
   const navigate = useNavigate();
-  const date = new Date(props.entry.createdAt).toDateString();
-  const time = new Date(props.entry.createdAt).toLocaleTimeString();
+  const date = new Date(item.createdAt).toDateString();
+  const time = new Date(item.createdAt).toLocaleTimeString();
 
   const redirectHandler = () => {
-    navigate(`/post/${props.entry._id}`);
+    navigate(`/post/${item._id}`);
   }
 
   return (
     <>
       <div onClick={redirectHandler} className={styles.div1}>
-        <div className={styles.div2}><span className={styles.span1}>{props.entry.owner.username}</span> ◷ {date}, {time}
-          <span className="ml-2">IN:</span> <span className={styles.span2}>{props.entry.category}</span>
+        <div className={styles.div2}>
+          <span className={styles.span1}>{item.owner.username}</span> ◷ {date}, {time}
+          <span className="ml-2">IN:</span> <span className={styles.span2}>{item.category}</span>
         </div>
-        <div className={styles.div3}>{props.entry.title} </div>  <CommentsRating entry={props.entry} />
+        <div className={styles.div3}>{item.title} </div>  <CommentsRating item={item} />
       </div>
     </>
   )

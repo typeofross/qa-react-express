@@ -40,8 +40,11 @@ function Home() {
         </div>
         <div className={styles.div3}>
           <p className={styles.p}>NEWEST POSTS:</p>
-          {data.map(entry =>
-            <ListItems key={entry._id} entry={entry} />
+          {data.map(item =>
+            <ListItems
+              key={item._id}
+              item={item}
+            />
           )}
         </div>
       </div>

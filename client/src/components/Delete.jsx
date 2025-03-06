@@ -22,6 +22,7 @@ function Delete() {
       navigate('/');
 
     } catch (err) {
+      navigate('/404');
       console.error(err)
     }
   }

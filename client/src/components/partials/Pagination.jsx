@@ -1,4 +1,9 @@
-function Pagination({ currentPage, totalPages, onPageChange }) {
+function Pagination(
+  {
+    currentPage,
+    totalPages,
+    onPageChange
+  }) {
 
   let pages = [];
 
@@ -15,6 +20,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       <div className="mt-10">
         {pages.map(page => {
           return <span
+            key={page}
             onClick={() => onPageChange(page)}
             className={`${styles.span1} ${currentPage == page ? `${styles.span2}` : ``}`}>
             {page}

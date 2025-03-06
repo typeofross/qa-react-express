@@ -3,7 +3,22 @@ import CommentForm from './CommentForm.jsx';
 import config from '/config.js'
 import { NavLink } from 'react-router';
 
-function PostItem({ post, rate, comment, error, data, setData }) {
+function PostItem(
+  {
+    post,
+    rate,
+    handleSubmitComment,
+    error,
+    setError,
+    comment,
+    setComment,
+    updatedComment,
+    setCommentUpdate,
+    commentDeleteHandler,
+    commentUpdateHandler,
+    update,
+    setUpdate
+  }) {
 
   const date = new Date(post.createdAt).toDateString();
   const time = new Date(post.createdAt).toLocaleTimeString();
@@ -33,10 +48,6 @@ function PostItem({ post, rate, comment, error, data, setData }) {
     button2 = styles.button6;
   }
 
-  const handleSubmitComment = () => {
-    comment(data.body)
-  }
-
   return (
     <>
       <div className={styles.div1}>
@@ -45,8 +56,8 @@ function PostItem({ post, rate, comment, error, data, setData }) {
         </div>
 
         <div className={styles.div3}>
-          <NavLink onClick={() => rate('like')} className={button1}>{post.likes.length} ▲</NavLink>
-          <NavLink onClick={() => rate('dislike')} className={button2}>{post.dislikes.length} ▼</NavLink>
+          <NavLink onClick={() => rate('ratePost', post._id, 'like')} className={button1}>{post.likes.length} ▲</NavLink>
+          <NavLink onClick={() => rate('ratePost', post._id, 'dislike')} className={button2}>{post.dislikes.length} ▼</NavLink>
         </div>
 
         {post.isOwner ?
@@ -69,9 +80,10 @@ function PostItem({ post, rate, comment, error, data, setData }) {
 
         <CommentForm
           handleSubmitComment={handleSubmitComment}
-          data={data}
-          setData={setData}
+          comment={comment}
+          setComment={setComment}
           error={error}
+          setError={setError}
         />
 
         : ""}
@@ -83,7 +95,14 @@ function PostItem({ post, rate, comment, error, data, setData }) {
           <div className="mt-5">
             {post.comments.map(comment => {
               return <CommentItem
-                props={comment}
+                comment={comment}
+                rate={rate}
+                updatedComment={updatedComment}
+                setCommentUpdate={setCommentUpdate}
+                commentDeleteHandler={commentDeleteHandler}
+                commentUpdateHandler={commentUpdateHandler}
+                update={update}
+                setUpdate={setUpdate}
                 key={comment._id}
               />
             })}

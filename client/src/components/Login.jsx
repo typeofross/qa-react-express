@@ -21,7 +21,7 @@ function Login() {
   async function submitHandler(e) {
     e.preventDefault();
     try {
-      const response = await services.auth('login', { "password": data.password, "email": data.email });
+      const response = await services.auth('login', data);
 
       if (response.status !== 'success') {
         throw new Error(response.message)
