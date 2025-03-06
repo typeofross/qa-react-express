@@ -51,8 +51,8 @@ function CommentItem(
     setMsg(msg => !msg);
   }
 
-  const commentUpdate = () => {
-    setUpdate(update => !update);
+  const commentUpdate = (id) => {
+    setUpdate(update ? false : id);
     setCommentUpdate({ body: comment.body })
   }
 
@@ -66,7 +66,7 @@ function CommentItem(
         <div className={styles.div3}>
           <h3 className={styles.h3}>{comment.owner.username}</h3>
           <p className={styles.p1}>{date}, {time}</p>
-          {update ?
+          {update && update == comment._id ?
             <form onSubmit={commentUpdateHandler} id={comment._id}>
               <input
                 type="text"
@@ -84,7 +84,7 @@ function CommentItem(
 
             {comment.isOwner ?
               <>
-                <NavLink onClick={commentUpdate} className={styles.navLink2}>EDIT</NavLink>
+                <NavLink onClick={() => commentUpdate(comment._id)} className={styles.navLink2}>EDIT</NavLink>
                 <NavLink onClick={deleteConfirmationHandler} className={styles.navLink1}>REMOVE</NavLink>
                 {msg ?
                   <> <span className={styles.span2} onClick={() => commentDeleteHandler(comment._id)}>YES</span> <span className={styles.span3} onClick={deleteConfirmationHandler}>NO</span></>

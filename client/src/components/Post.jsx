@@ -98,7 +98,7 @@ function Post() {
       }
 
       setComment({ body: "" })
-      setUpdate(update => !update);
+      setUpdate(false);
 
     } catch (err) {
       console.error(err)
