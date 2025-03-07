@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router"
+
 export default function CreateUpdateForm(
     {
         handleSubmit,
@@ -8,18 +10,26 @@ export default function CreateUpdateForm(
         type
     }) {
 
+    const navigate = useNavigate();
+
     const styles = {
-        form: "max-w-xl mx-auto p-8 bg-white rounded-sm mt-15 border-1 border-gray-200",
+        form: "max-w-xl mx-auto p-8 bg-white rounded-lg mt-15 border-1 border-gray-200",
         h2: "text-2xl font-semibold mb-4",
         label: "block text-gray-700 text-sm font-bold mb-2",
-        input: "border rounded w-full py-2 px-3 text-gray-700",
+        input: "border rounded w-full py-2 px-3 text-gray-700 border-1 border-gray-300 rounded-lg",
         p1: "text-red-700 text-sm mt-1",
-        button: "bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded focus:outline-none cursor-pointer w-[100%]"
+        button: "cursor-pointer w-full text-xs md:text-md p-2 border-3 rounded-lg border-emerald-200 text-emerald-700 font-medium bg-emerald-200 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white",
+        navLink: "block p-2 border-1 border-gray-200 rounded-lg mb-5 w-fit text-xs hover:bg-stone-100 cursor-pointer"
     }
 
+    const goBack = () => {
+        navigate(-1);
+    }
     return (
         <>
             <form onSubmit={handleSubmit} className={styles.form}>
+                <h1 onClick={goBack} className={styles.navLink}>↵ GO BACK</h1>
+
                 <h2 className={styles.h2}>{type}</h2>
                 <div className="mb-4">
                     <label htmlFor="title" className={styles.label}>

@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import React, { useState } from 'react';
 import services from '/services/fetch.js';
 import CreateUpdateForm from '/src/components/partials/CreateUpdateForm.jsx';
@@ -30,7 +30,6 @@ function Create() {
         <>
             <title>Create a Post</title>
 
-            <NavLink to='/'>↵ BACK TO HOME</NavLink>
             <CreateUpdateForm
                 handleSubmit={handleSubmit}
                 data={data}

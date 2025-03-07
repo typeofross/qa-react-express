@@ -7,7 +7,7 @@ function Layout() {
     return (
         <>
             <Header />
-            <main className="mt-[30px] overflow-y-auto custom-scrollbar h-[87%] bg-white rounded-lg p-2">
+            <main className="mt-[30px] overflow-y-auto custom-scrollbar bg-white rounded-lg shadow-sm">
                 <Outlet />
             </main>
             <Footer />

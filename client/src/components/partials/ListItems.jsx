@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import CommentsRating from './ListItemsCommentsRating.jsx';
 
 const styles = {
-  div1: "cursor-pointer text-xs mb-3 shadow-sm rounded-lg p-2 hover:shadow-lg hover:bg-slate-100 border-1 border-gray-100",
+  div1: "cursor-pointer text-xs mb-3 shadow-sm rounded-lg p-2 hover:shadow-lg hover:bg-stone-50 border-1 border-gray-100 m-2 ",
   div2: "text-xs mb-2 mt-1 grid grid-cols-[1fr_1fr] space-between",
   div3: "justify-self-end",
   div4: "text-lg p-2 bg-stone-100 rounded-lg text-stone-700",
@@ -15,6 +15,11 @@ function ListItems({ item }) {
   const navigate = useNavigate();
   const date = new Date(item.createdAt).toDateString();
   const time = new Date(item.createdAt).toLocaleTimeString();
+  let commentDate;
+
+  if(item.comments.length) { 
+    commentDate = new Date(item.comments[0].createdAt).toDateString();
+  }
 
   const redirectHandler = () => {
     navigate(`/post/${item._id}`);
@@ -38,7 +43,7 @@ function ListItems({ item }) {
           {item.comments.length > 0 ?
             <>
               <div className={styles.div5}>
-                Last commented by <span className="font-medium">{item.comments[0].owner.username}</span>
+                Last commented by <span className="font-medium">{item.comments[0].owner.username}</span> on {commentDate}
               </div>
             </>
             :

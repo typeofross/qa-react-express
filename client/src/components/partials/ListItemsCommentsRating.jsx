@@ -10,12 +10,18 @@ function CommentsRating({ item }) {
     return (
         <>
             <div className={styles.div}>
-                <span className={styles.span1}>{item.likes.length} <span className="text-emerald-700">▲</span></span>
-                <span className={styles.span2}>{item.dislikes.length} <span className="text-rose-800">▼</span></span>
-                {item.comments.length ?
-                    <span className={styles.span3}>{item.comments.length} <span className={styles.span4}>🗩</span></span>
+                {!item.likes.length && !item.dislikes.length ?
+                    ""
                     :
-                    ""}
+                    <>
+                        <span className={styles.span1}>{item.likes.length} <span className="text-emerald-700">▲</span></span>
+                        <span className={styles.span2}>{item.dislikes.length} <span className="text-rose-800">▼</span></span>
+                    </>
+                }
+
+                {item.comments[0] &&
+                    <span className={styles.span3}>{item.comments.length} <span className={styles.span4}>🗩</span></span>
+                }
             </div>
         </>
     )

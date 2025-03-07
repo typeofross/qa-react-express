@@ -38,10 +38,28 @@ function Category() {
     return "Loading..."
   }
 
+  const styles = {
+    div1: "grid grid-cols-[200px_auto]",
+    div2: "justify-self-end",
+    navLink: "block p-2 border-1 border-gray-200 rounded-lg m-2 w-fit text-xs hover:bg-stone-100"
+  }
+
   return (
     <>
       <title>Category</title>
-      <NavLink to='/'>↵ BACK TO HOME</NavLink>
+      <div className={styles.div1}>
+        <div>
+          <NavLink to='/' className={styles.navLink}>↵ BACK TO HOME</NavLink>
+        </div>
+        <div className={styles.div2}>
+          {totalPages > 1 &&
+            <Pagination
+              currentPage={params.number}
+              totalPages={totalPages}
+              onPageChange={handlePageChange} />
+          }
+        </div>
+      </div>
 
       <div className="mt-5">
         {data.message.map(item =>
@@ -50,14 +68,6 @@ function Category() {
             item={item} />
         )}
       </div>
-
-      {totalPages > 1 ?
-        <Pagination
-          currentPage={params.number}
-          totalPages={totalPages}
-          onPageChange={handlePageChange} />
-        :
-        ""}
     </>
   )
 }

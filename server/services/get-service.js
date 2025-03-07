@@ -50,6 +50,16 @@ export default {
                 .limit(limit)
                 .sort({ createdAt: -1 })
                 .populate('owner', 'username')
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'owner',
+                        select: 'username',
+                    },
+                    options: {
+                        sort: { createdAt: -1 }
+                    }
+                })
         },
         postCount(name) {
             return Post.countDocuments({ category: new RegExp(`^${name}$`, 'i') });

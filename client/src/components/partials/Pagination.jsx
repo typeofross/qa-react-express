@@ -12,12 +12,12 @@ function Pagination(
   }
 
   const styles = {
-    span1: "text-sm p-3 border-1 border-gray-200 cursor-pointer mr-3",
-    span2: "bg-indigo-600 text-white font-bold"
+    span1: "p-2 pl-3 pr-3 border-1 border-gray-200 rounded-lg mt-2 mr-2 text-xs hover:bg-stone-100 cursor-pointer",
+    span2: "!border-blue-200 bg-blue-200 text-blue-950 font-bold"
   }
   return (
     <>
-      <div className="mt-10">
+      <div className="mt-2">
         {pages.map(page => {
           return <span
             key={page}
