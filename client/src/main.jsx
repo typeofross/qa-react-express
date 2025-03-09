@@ -13,6 +13,7 @@ import Create from './components/Create.jsx';
 import UserLayout from './components/layouts/UserLayout.jsx';
 import Logout from './components/Logout.jsx';
 import Update from './components/Update.jsx';
+import Profile from './components/Profile.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -33,6 +34,8 @@ createRoot(document.getElementById('root')).render(
       <Route element={<UserLayout />}>
         <Route path="/create" element={<Create />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/profile/activity" element={<Profile />} />
+        <Route path="/profile/settings" element={<Profile />} />
         <Route path="/update/:id" element={<Update />} />
       </Route>
 
