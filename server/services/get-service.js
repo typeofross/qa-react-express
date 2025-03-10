@@ -1,4 +1,5 @@
 import Post from '../models/post.js';
+import Comment from '../models/comment.js';
 
 export default {
     get: {
@@ -73,6 +74,27 @@ export default {
             })
                 .sort({ createdAt: -1 })
                 .populate('owner', 'username')
+        },
+    },
+    profile: {
+        posts(userId) {
+            return Post.find({ owner: userId })
+                .sort({ createdAt: -1 })
+        },
+        comments(userId) {
+            return Comment.find({ owner: userId })
+                .sort({ createdAt: -1 })
+        },
+        rated(userId) {
+            return Post.find(
+                {
+                    $or: [
+                        { likes: { $in: [userId] } },
+                        { dislikes: { $in: [userId] } }
+                    ]
+                }
+            )
+                .sort({ createdAt: -1 })
         }
     }
 }

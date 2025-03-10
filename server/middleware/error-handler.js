@@ -14,6 +14,7 @@ function format(err) {
         "Error": {
             "Unauthorized.": { code: 401, msg: "Unauthorized." },
             "No posts to show.": { code: 204, msg: "No posts to show." },
+            "No records to show.": { code: 204, msg: "No records to show." },
             "No categories to show.": { code: 204, msg: "No categories to show." },
             "Page not found.": { code: 404, msg: "Page not found." },
             "ID not found.": { code: 404, msg: "ID not found." },

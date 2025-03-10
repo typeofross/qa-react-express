@@ -39,7 +39,7 @@ function Category() {
   }
 
   const styles = {
-    div1: "grid grid-cols-[200px_auto]",
+    div1: "grid grid-cols-[200px_auto] sticky top-0 bg-white",
     div2: "justify-self-end",
     navLink: "block p-2 border-1 border-gray-200 rounded-lg m-2 w-fit text-xs hover:bg-stone-100"
   }

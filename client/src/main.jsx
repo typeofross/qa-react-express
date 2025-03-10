@@ -13,7 +13,8 @@ import Create from './components/Create.jsx';
 import UserLayout from './components/layouts/UserLayout.jsx';
 import Logout from './components/Logout.jsx';
 import Update from './components/Update.jsx';
-import Profile from './components/Profile.jsx';
+import ProfileSettings from './components/ProfileSettings.jsx';
+import Activity from './components/Activity.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -24,6 +25,9 @@ createRoot(document.getElementById('root')).render(
         <Route path='/search' element={<Search />} />
         <Route path='/post/:id' element={<Post />} />
         <Route path='/category/:name/page/:number' element={<Category />} />
+        <Route path="/profile/activity/posts" element={<Activity type="profilePosts" />} />
+        <Route path="/profile/activity/comments" element={<Activity type="profileComments" />} />
+        <Route path="/profile/activity/rated" element={<Activity type="profileRatings" />} />
       </Route>
 
       <Route element={<AuthLayout />}>
@@ -34,9 +38,8 @@ createRoot(document.getElementById('root')).render(
       <Route element={<UserLayout />}>
         <Route path="/create" element={<Create />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/profile/activity" element={<Profile />} />
-        <Route path="/profile/settings" element={<Profile />} />
         <Route path="/update/:id" element={<Update />} />
+        <Route path="/profile/settings" element={<ProfileSettings />} />
       </Route>
 
       <Route path='*' element={<NotFound />} />

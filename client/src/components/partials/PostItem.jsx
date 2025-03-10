@@ -48,7 +48,7 @@ function PostItem(
     button4: `text-rose-700 font-bold ml-2 p-1 bg-gray-50 border-1 border-gray-200 rounded-lg`,
     button5: `bg-emerald-200 font-bold p-1 text-emerald-700 border-1 border-emerald-200 rounded-lg`,
     button6: `bg-rose-200 font-bold ml-2 p-1 text-rose-700 border-1 border-rose-200 rounded-lg`,
-    button7: `bg-gray-50 font-bold ml-2 p-1 text-gray-500 border-1 border-gray-200 rounded-lg`
+    button7: `bg-gray-50 font-bold ml-2 p-1 pl-3 pr-3 text-gray-500 border-1 border-gray-200 rounded-lg`
   }
 
   let button1 = styles.button3;

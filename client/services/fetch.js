@@ -18,7 +18,14 @@ const map = {
     addComment: () => { return endpoints.comment.create },
     updateComment: (id) => { return endpoints.comment.base + id },
     rateComment: ({ id, action }) => { return endpoints.comment.base + id + "/" + action },
-    deleteComment: (id) => { return endpoints.comment.base + id }
+    deleteComment: (id) => { return endpoints.comment.base + id },
+
+    updateProfile: () => { return endpoints.profile.update },
+    deleteProfile: () => { return endpoints.profile.delete },
+
+    profilePosts: () => { return endpoints.profile.activity + 'posts' },
+    profileComments: () => { return endpoints.profile.activity + 'comments' },
+    profileRatings: () => { return endpoints.profile.activity + 'rated' }
 }
 
 const requestOptions = (method, data) => {
@@ -50,7 +57,7 @@ export default {
     async crud(type, data, p1, method) {
         const req = await fetch(map[type](p1), requestOptions(method, data));
 
-        if (type == "deletePost" || type == "ratePost" || type == "deleteComment" || type == "rateComment") {
+        if (type == "deletePost" || type == "ratePost" || type == "deleteComment" || type == "rateComment" || type == "deleteProfile") {
             return req;
         }
 

@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 import User from '../models/user.js';
+import Comment from '../models/comment.js';
+import Post from "../models/post.js";
 import ValidationError from "../utils/custom-error.js";
 import validations from '../utils/validations.js';
 import config from '../config.js';
@@ -121,6 +123,96 @@ function validateRegisterInput(req) {
     return true;
 }
 
+async function update(req) {
+    let errors = [];
+
+    if (req.password == "") {
+        errors.push({ path: "password", error: validations.register.password.required })
+    }
+    else if (req.repassword == "") {
+        errors.push({ path: "password", error: validations.register.password.required })
+    }
+    else if (req.password != req.repassword) {
+        errors.push({ path: "repassword", error: validations.register.password.match })
+    }
+    else if (!validations.register.password.pattern.test(req.password)) {
+        errors.push({ path: "password", error: validations.register.password.message })
+    }
+
+    if (req.currentpassword == "") {
+        errors.push({ path: "currentpassword", error: validations.register.password.required })
+    }
+
+    if (errors.length > 0) {
+        throw new ValidationError("errors", errors);
+    }
+
+    const getUser = await User.findById(req.userId)
+
+    const validatePasswords = await bcrypt.compare(req.currentpassword, getUser.password);
+
+    if (!validatePasswords) {
+        errors.push({ path: "currentpassword", error: "Incorrect password." })
+    }
+
+    if (errors.length > 0) {
+        throw new ValidationError("errors", errors);
+    }
+
+    req.password = await bcrypt.hash(req.password, 5);
+
+    return User.findByIdAndUpdate(
+        req.userId,
+        { password: req.password }
+    )
+}
+
+async function deleteUser(id) {
+    // Get all postIds from Posts collection.
+    const postIds = await Post.find({ owner: id }).select('_id')
+    // Delete all comments that were added to these posts.
+    for (let item of postIds) {
+        await Comment.deleteMany({ postId: item._id })
+    }
+    // Delete all posts from the user.
+    await Post.deleteMany({ owner: id })
+    // Delete all comments from the user.
+    await Comment.deleteMany({ owner: id })
+    // Delete all rates from the user.
+    await Post.updateMany(
+        {
+            $or: [
+                { likes: { $in: [id] } },
+                { dislikes: { $in: [id] } }
+            ]
+        },
+        {
+            $pull: {
+                likes: id,
+                dislikes: id
+            }
+        }
+    );
+    await Comment.updateMany(
+        {
+            $or: [
+                { likes: { $in: [id] } },
+                { dislikes: { $in: [id] } }
+            ]
+        },
+        {
+            $pull: {
+                likes: id,
+                dislikes: id
+            }
+        }
+    );
+    // Delete the user.
+    await User.findByIdAndDelete(id);
+
+    return true;
+}
+
 export function getToken(req, res, next) {
     try {
         if (req.cookies.accessToken) {
@@ -183,5 +275,7 @@ export async function isOwner(req, res, next) {
 
 export {
     register,
-    login
+    login,
+    update,
+    deleteUser
 };

@@ -41,7 +41,7 @@ function Header() {
               </div>
               {menu &&
                 <div className={styles.div5}>
-                  <NavLink to='/profile/activity' className={styles.navLink3}>MY ACTIVITY</NavLink>
+                  <NavLink to='/profile/activity/posts' className={styles.navLink3} onClick={() => toggleMenu(menu => !menu)}>MY ACTIVITY</NavLink>
                   <NavLink to='/profile/settings' className={styles.navLink3}>SETTINGS</NavLink>
                 </div>
               }

@@ -21,6 +21,11 @@ export default {
         login: serverBaseUrl + "/auth/login",
         register: serverBaseUrl + "/auth/register"
     },
+    profile: {
+        delete: serverBaseUrl + "/profile/delete",
+        update: serverBaseUrl + "/profile/update",
+        activity: serverBaseUrl + "/profile/activity/"
+    },
     getCookie() {
         return document.cookie.replace('accessToken=');
     }

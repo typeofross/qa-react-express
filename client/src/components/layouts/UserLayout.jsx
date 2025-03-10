@@ -14,7 +14,7 @@ function UserLayout() {
 
     return (
         <>
-            <main className="mt-[30px]">
+            <main className="mt-[30px] h-[90vh]">
                 <Outlet />
             </main>
         </>
