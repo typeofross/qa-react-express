@@ -83,6 +83,7 @@ export default {
         },
         comments(userId) {
             return Comment.find({ owner: userId })
+                .populate('postId', 'title')
                 .sort({ createdAt: -1 })
         },
         rated(userId) {

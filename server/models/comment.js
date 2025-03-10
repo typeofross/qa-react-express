@@ -9,7 +9,8 @@ const commentSchema = new mongoose.Schema({
         ref: 'user'
     },
     postId: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'post'
     },
     likes: [{
         type: mongoose.Schema.Types.ObjectId,

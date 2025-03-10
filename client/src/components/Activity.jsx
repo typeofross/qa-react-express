@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import services from '/services/fetch.js';
 import config from '/config.js';
 import ProfileListPosts from './partials/ProfileListPosts.jsx';
+import ProfileListComments from './partials/ProfileListComments.jsx';
 
 function Activity({ type }) {
     const navigate = useNavigate();
@@ -86,7 +87,13 @@ function Activity({ type }) {
                 }
 
                 {type == "profileComments" &&
-                    <div>Load {type}...</div>
+                    data.map(item =>
+
+                        <ProfileListComments
+                            key={item._id}
+                            item={item}
+                        />
+                    )
                 }
 
                 {type == "profileRatings" &&
