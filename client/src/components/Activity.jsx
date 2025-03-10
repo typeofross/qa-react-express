@@ -4,6 +4,7 @@ import services from '/services/fetch.js';
 import config from '/config.js';
 import ProfileListPosts from './partials/ProfileListPosts.jsx';
 import ProfileListComments from './partials/ProfileListComments.jsx';
+import ProfileListRated from './partials/ProfileListRated.jsx';
 
 function Activity({ type }) {
     const navigate = useNavigate();
@@ -88,7 +89,6 @@ function Activity({ type }) {
 
                 {type == "profileComments" &&
                     data.map(item =>
-
                         <ProfileListComments
                             key={item._id}
                             item={item}
@@ -97,7 +97,12 @@ function Activity({ type }) {
                 }
 
                 {type == "profileRatings" &&
-                    <div>Load {type}...</div>
+                    data.map(item =>
+                        <ProfileListRated
+                            key={item._id}
+                            item={item}
+                        />
+                    )
                 }
             </div>
         </>

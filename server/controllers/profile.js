@@ -15,7 +15,15 @@ profileController.get('/activity/:type', async (req, res, next) => {
             result = await services.profile.comments(res.locals.userId);
         }
         else if (req.params.type == "rated") {
-            result = await services.profile.rated(res.locals.userId);
+            result = await services.profile.rated(res.locals.userId).lean();
+
+            result.forEach(post => {
+                post.isLiked = false;
+
+                if (post.likes?.find(x => x == res.locals.userId)) {
+                    post.isLiked = true;
+                }
+            })
         }
         else {
             throw new Error('Invalid request.')
