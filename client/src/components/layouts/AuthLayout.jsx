@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router';
 import config from '/config.js';
 
 export const styles = {
+    main: "mt-[30px] h-[90vh]",
     form: "max-w-xl mx-auto p-8 bg-white rounded-lg mt-15 border-1 border-gray-200 text-gray-700 shadow-lg",
     h2: "text-2xl font-semibold mb-4",
     label: "block text-gray-700 text-sm font-bold mb-2",
@@ -26,7 +27,7 @@ function AuthLayout() {
 
     return (
         <>
-            <main className="mt-[30px] h-[90vh]">
+            <main className={styles.main}>
                 <Outlet />
             </main>
         </>

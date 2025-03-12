@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 import config from '/config.js';
 import services from '/services/fetch.js';
 import PostItem from '/src/components/partials/PostItem.jsx';
+import ErrorToast from '/src/components/partials/ErrorToast.jsx';
 
 function Post() {
   const [postData, setPostData] = useState('');
@@ -12,6 +13,7 @@ function Post() {
   const [rate, setRate] = useState(false);
   const [error, setError] = useState([]);
   const [commentError, setCommentError] = useState([]);
+  const [generalError, setGeneralError] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -30,6 +32,7 @@ function Post() {
       setPostData(response.message);
 
     } catch (err) {
+      navigate('/404');
       console.error(err)
     }
 
@@ -85,6 +88,7 @@ function Post() {
 
     } catch (err) {
       console.error(err)
+      setGeneralError(err.message);
     }
   }
 
@@ -94,11 +98,10 @@ function Post() {
     try {
       const response = await services.crud('updateComment', updatedComment, e.target.form.id, "PATCH");
 
-      if (response.status !== 'success') {
+      if (response.status !== 'success') {  
         setCommentError(response.message);
         throw new Error(response.message)
       }
-
       setComment({ body: "" })
       setUpdate(false);
 
@@ -118,6 +121,7 @@ function Post() {
       navigate('/');
 
     } catch (err) {
+      setGeneralError(err.message);
       console.error(err)
     }
   }
@@ -129,6 +133,7 @@ function Post() {
   return (
     <>
       <title>{postData.title}</title>
+      {generalError && <ErrorToast error={generalError} setError={setGeneralError} />}
       <PostItem
         post={postData}
         rate={handleRateAction}

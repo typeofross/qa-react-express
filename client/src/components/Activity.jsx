@@ -2,36 +2,54 @@ import { NavLink, useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import services from '/services/fetch.js';
 import config from '/config.js';
-import ProfileListPosts from './partials/ProfileListPosts.jsx';
-import ProfileListComments from './partials/ProfileListComments.jsx';
-import ProfileListRated from './partials/ProfileListRated.jsx';
+import ProfileListPosts from '/src/components/partials/ProfileListPosts.jsx';
+import ProfileListComments from '/src/components/partials/ProfileListComments.jsx';
+import ProfileListRated from '/src/components/partials/ProfileListRated.jsx';
+import NoPostsToShow from '/src/components/partials/NoPostsToShow.jsx';
+import ErrorToast from '/src/components/partials/ErrorToast.jsx';
 
-function Activity({ type }) {
-    const navigate = useNavigate();
-    const [data, setData] = useState('');
+function Activity() {
+    const map = {
+        "posts": "profilePosts",
+        "comments": "profileComments",
+        "rated": "profileRatings"
+    }
+
+    const [msg, setMsg] = useState(false);
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(false);
     const [refresh, triggerRefresh] = useState(false);
+    const navigate = useNavigate();
+    const type = map[useParams().type];
 
     useEffect(() => {
-        if (!config.getCookie()) {
-            return navigate('/');
-        }
-
         get();
+
+        if (!config.getCookie()) {
+            return navigate('/login');
+        }
 
     }, [type, refresh])
 
     const get = async () => {
         try {
+            setData([])
+            setMsg(false);
             const response = await services.get(type, "", "", { credentials: 'include' });
 
-            if (response.status !== 'success') {
-                throw new Error(response.message)
+            if (response.status === 204) {
+                return setMsg(true);
+            }
+
+            if (response.status !== "success") {
+                throw new Error(response.message);
             }
 
             setData(response.message);
 
         } catch (err) {
             console.error(err)
+            setError(err.message);
         }
     }
 
@@ -76,6 +94,10 @@ function Activity({ type }) {
                 </div>
             </div>
 
+            {msg && <NoPostsToShow />}
+
+            {error && <ErrorToast error={error} setError={setError} />}
+
             <div className="mt-5 mb-5">
                 {type == "profilePosts" &&
                     data.map(item =>
@@ -102,9 +124,9 @@ function Activity({ type }) {
                             key={item._id}
                             item={item}
                         />
-                    )
-                }
+                    )}
             </div>
+
         </>
     )
 }

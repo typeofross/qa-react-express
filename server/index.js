@@ -2,9 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import routes from './routes.js';
-import errorHandler from './middleware/error-handler.js';
-import config from './config.js';
+import routes from '#root/routes.js';
+import errorHandler from '#root/middleware/error-handler.js';
+import config from '#root/config.js';
 
 const app = express();
 const port = config.port;

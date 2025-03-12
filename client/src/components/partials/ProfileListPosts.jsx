@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router';
-import CommentsRating from './ListItemsCommentsRating.jsx';
+import CommentsRating from '/src/components/partials/ListItemsCommentsRating.jsx';
 import { useState } from 'react';
 
 const styles = {

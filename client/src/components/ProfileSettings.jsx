@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import services from '/services/fetch.js';
-import ChangePasswordForm from "./partials/ChangePasswordForm";
+import ChangePasswordForm from "/src/components/partials/ChangePasswordForm";
+import ErrorToast from '/src/components/partials/ErrorToast.jsx';
 
 function ProfileSettings() {
     const navigate = useNavigate();
     const [deleteConfirmationModal, toggleDeleteConfirmationModal] = useState(false);
     const [changePasswordModal, toggleChangePasswordModal] = useState(false);
+    const [error, setError] = useState(false);
 
     const styles = {
         div: "max-w-xl h-[50vh] mx-auto p-8 bg-white rounded-lg mt-15 border-1 border-gray-200",
@@ -44,11 +46,16 @@ function ProfileSettings() {
 
         } catch (err) {
             console.error(err)
+            setError(err.message);
         }
     }
 
     return (
         <>
+            {error &&
+                <ErrorToast error={error} />
+            }
+
             <div className={styles.div}>
                 <h1 onClick={goBack} className={styles.navLink}>↵ GO BACK</h1>
 

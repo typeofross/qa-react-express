@@ -4,6 +4,9 @@
   "description": "Simple server using Express and Mongoose to handle incoming requests from the client.",
   "main": "index.js",
   "type": "module",
+  "imports": {
+    "#root/*.js": "./*.js"
+  },
   "scripts": {
     "dev": "nodemon index.js"
   },

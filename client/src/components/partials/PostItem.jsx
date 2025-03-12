@@ -1,5 +1,5 @@
-import CommentItem from './CommentItem.jsx';
-import CommentForm from './CommentForm.jsx';
+import CommentItem from '/src/components/partials/CommentItem.jsx';
+import CommentForm from '/src/components/partials/CommentForm.jsx';
 import config from '/config.js'
 import { NavLink } from 'react-router';
 import { useState } from 'react';

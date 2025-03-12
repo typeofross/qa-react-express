@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router';
-import SearchInputField from './SearchInputField.jsx';
+import SearchInputField from '/src/components/partials/SearchInputField.jsx';
 import config from '/config.js';
 
 function Header() {
@@ -15,7 +15,7 @@ function Header() {
     div2: "justify-self-end self-center",
     div3: "sm:w-[450px] mt-1 sm:justify-self-end",
     div4: "ml-3 inline-block grid text-center pt-1 text-lg font-semibold uppercase w-10 h-10 rounded-full bg-emerald-200 cursor-pointer hover:bg-emerald-300",
-    div5: "border-1 border-gray-200 rounded-lg shadow-lg mt-3 ml-[-1%] absolute w-[150px] z-1 bg-white",
+    div5: "z-9 border-1 border-gray-200 rounded-lg shadow-lg mt-3 ml-[-1%] absolute w-[150px] z-1 bg-white",
     span: "hidden text-sm md:inline cursor-pointer text-gray-500 ml-3",
     navLink1: "text-xs md:text-md p-2 border-3 rounded-md tracking-widest border-emerald-200 text-emerald-700 font-medium bg-emerald-200 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white",
     navLink2: "text-xs md:text-md p-2 border-3 rounded-md tracking-widest border-blue-200 bg-blue-200 text-blue-700 hover:bg-blue-500 hover:border-blue-500 hover:text-white",

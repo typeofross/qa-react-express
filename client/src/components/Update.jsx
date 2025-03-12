@@ -21,6 +21,10 @@ function Update() {
                 throw new Error(response.message)
             }
 
+            if (!response.message.isOwner) {
+                navigate('/');
+            }
+
             setData({
                 title: response.message.title,
                 category: response.message.category,

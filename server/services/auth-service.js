@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
-import User from '../models/user.js';
-import Comment from '../models/comment.js';
-import Post from "../models/post.js";
-import ValidationError from "../utils/custom-error.js";
-import validations from '../utils/validations.js';
-import config from '../config.js';
+import User from '#root/models/user.js';
+import Comment from '#root/models/comment.js';
+import Post from "#root/models/post.js";
+import ValidationError from "#root/utils/custom-error.js";
+import validations from '#root/utils/validations.js';
+import config from '#root/config.js';
 import mongoose from 'mongoose';
 
 async function login(req) {
@@ -110,7 +110,7 @@ function validateRegisterInput(req) {
         errors.push({ path: "password", error: validations.register.password.required })
     }
     else if (req.password != req.repassword) {
-        errors.push({ path: "password", error: validations.register.password.match })
+        errors.push({ path: "repassword", error: validations.register.password.match })
     }
     else if (!validations.register.password.pattern.test(req.password)) {
         errors.push({ path: "password", error: validations.register.password.message })

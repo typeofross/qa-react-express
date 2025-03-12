@@ -1,6 +1,6 @@
 import express from 'express';
-import services from '../services/get-service.js';
-import { update, deleteUser } from '../services/auth-service.js';
+import services from '#root/services/get-service.js';
+import { update, deleteUser } from '#root/services/auth-service.js';
 
 const profileController = express.Router();
 

@@ -1,7 +1,7 @@
-import ValidationError from "../utils/custom-error.js";
-import validations from '../utils/validations.js';
-import Post from '../models/post.js';
-import Comment from '../models/comment.js';
+import ValidationError from "#root/utils/custom-error.js";
+import validations from '#root/utils/validations.js';
+import Post from '#root/models/post.js';
+import Comment from '#root/models/comment.js';
 import mongoose from "mongoose";
 
 function validatePostInput(req) {

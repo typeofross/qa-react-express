@@ -24,7 +24,7 @@ function ProfileListComments({ item }) {
             <span className={styles.span2}>◷ {date}, {time}</span>
           </div>
           <div>
-            <span className={styles.span2}>{item.postId.title}</span>
+            <span className={styles.span2}>{item?.postId?.title}</span>
           </div>
         </div>
         <div className={styles.div3}>

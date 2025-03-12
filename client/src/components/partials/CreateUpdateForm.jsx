@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router"
+import FormError from '/src/components/partials/FormError.jsx';
 
 export default function CreateUpdateForm(
     {
@@ -13,7 +14,7 @@ export default function CreateUpdateForm(
     const navigate = useNavigate();
 
     const styles = {
-        form: "max-w-xl mx-auto p-8 bg-white rounded-lg mt-15 border-1 border-gray-200",
+        form: "max-w-xl mx-auto p-8 bg-white rounded-lg mt-2 border-1 border-gray-200",
         h2: "text-2xl font-semibold mb-4",
         label: "block text-gray-700 text-sm font-bold mb-2",
         input: "border rounded w-full py-2 px-3 text-gray-700 border-1 border-gray-300 rounded-lg",
@@ -45,13 +46,8 @@ export default function CreateUpdateForm(
                         required
                         className={styles.input}
                     />
-                    {error && error.find(x => x.path == "title") ?
-                        error.map(x => {
-                            if (x.path == "title") {
-                                return <p className={styles.p1}>{x.error}</p>
-                            }
-                        })
-                        : ""}
+                    <FormError error={error} field="title" />
+
                 </div>
 
                 <div className="mb-4">
@@ -68,13 +64,8 @@ export default function CreateUpdateForm(
                         required
                         className={styles.input}
                     />
-                    {error && error.find(x => x.path == "category") ?
-                        error.map(x => {
-                            if (x.path == "category") {
-                                return <p className={styles.p1}>{x.error}</p>
-                            }
-                        })
-                        : ""}
+                    <FormError error={error} field="category" />
+
                 </div>
 
                 <div className="mb-6">
@@ -91,13 +82,8 @@ export default function CreateUpdateForm(
                         required
                         className={styles.input}
                     />
-                    {error && error.find(x => x.path == "body") ?
-                        error.map(x => {
-                            if (x.path == "body") {
-                                return <p className={styles.p1}>{x.error}</p>
-                            }
-                        })
-                        : ""}
+                    <FormError error={error} field="body" />
+                    {error && !Array.isArray(error) && <p className={styles.p1}>{error}</p>}
                 </div>
 
                 <button

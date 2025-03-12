@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
+import FormError from '/src/components/partials/FormError.jsx';
 
 function CommentItem(
   {
@@ -31,6 +32,7 @@ function CommentItem(
     navLink1: "text-[11px] ml-2 text-gray-700 font-normal",
     navLink2: "text-[11px] ml-1 text-gray-700 font-normal",
     h3: "text-sm font-semibold inline",
+    p4: "text-red-700 text-sm mt-1 mb-5",
     p3: "text-red-700 text-xs mt-1",
     p1: "text-xs text-gray-500",
     p2: "text-gray-800 leading-relaxed",
@@ -109,13 +111,9 @@ function CommentItem(
             <p className={styles.p2}>{comment.body}</p>
           }
 
-          {commentError && commentError.find(x => x.path == "body") && update == comment._id ?
-            commentError.map(x => {
-              if (x.path == "body") {
-                return <p className={styles.p3}>{x.error}</p>
-              }
-            })
-            : ""}
+          <FormError error={commentError} field="body" />
+          {!Array.isArray(commentError) && update == comment._id && <p className={styles.p4}>{commentError}</p>}
+
           <div className="w-fit justify-self-right mt-1">
             <NavLink onClick={() => rate('rateComment', comment._id, 'like')} className={button1}>{comment.likes.length} ▲</NavLink>
             <NavLink onClick={() => rate('rateComment', comment._id, 'dislike')} className={button2}>{comment.dislikes.length} ▼</NavLink>

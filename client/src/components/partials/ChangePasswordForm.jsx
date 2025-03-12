@@ -1,5 +1,6 @@
 import { useState } from "react";
 import services from '/services/fetch.js';
+import FormError from '/src/components/partials/FormError.jsx';
 
 export default function ChangePasswordForm() {
 
@@ -56,13 +57,7 @@ export default function ChangePasswordForm() {
                             required
                             className={styles.input}
                         />
-                        {error && error.find(x => x.path == "currentpassword") ?
-                            error.map(x => {
-                                if (x.path == "currentpassword") {
-                                    return <p className={styles.p1}>{x.error}</p>
-                                }
-                            })
-                            : ""}
+                        <FormError error={error} field="currentpassword" />
                     </div>
 
                     <div className="mb-4">
@@ -78,13 +73,7 @@ export default function ChangePasswordForm() {
                             required
                             className={styles.input}
                         />
-                        {error && error.find(x => x.path == "password") ?
-                            error.map(x => {
-                                if (x.path == "password") {
-                                    return <p className={styles.p1}>{x.error}</p>
-                                }
-                            })
-                            : ""}
+                        <FormError error={error} field="password" />
                     </div>
 
                     <div className="mb-4">
@@ -100,13 +89,8 @@ export default function ChangePasswordForm() {
                             required
                             className={styles.input}
                         />
-                        {error && error.find(x => x.path == "repassword") ?
-                            error.map(x => {
-                                if (x.path == "repassword") {
-                                    return <p className={styles.p1}>{x.error}</p>
-                                }
-                            })
-                            : ""}
+                        <FormError error={error} field="repassword" />
+                        {error && !Array.isArray(error) && <p className={styles.p1}>{error}</p>}
                     </div>
 
                     <button

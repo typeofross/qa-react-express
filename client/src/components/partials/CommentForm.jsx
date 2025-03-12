@@ -1,3 +1,5 @@
+import FormError from '/src/components/partials/FormError.jsx'
+
 export default function CommentForm(
     {
         handleSubmitComment,
@@ -11,6 +13,7 @@ export default function CommentForm(
         label: "block text-gray-700 text-sm font-bold mb-2",
         textarea: "border rounded w-full py-2 px-3 text-gray-700",
         p: "text-red-700 text-sm mt-1",
+        p1: "text-red-700 text-sm mt-1 mb-5",
         button: "text-xs md:text-md p-2 border-3 rounded-md tracking-widest border-blue-200 bg-blue-200 text-blue-700 hover:bg-blue-500 hover:border-blue-500 hover:text-white focus:outline-none cursor-pointer w-[35%]"
     }
 
@@ -31,13 +34,9 @@ export default function CommentForm(
                         required
                         className={styles.textarea}
                     />
-                    {error && error.find(x => x.path == "body") ?
-                        error.map(x => {
-                            if (x.path == "body") {
-                                return <p className={styles.p}>{x.error}</p>
-                            }
-                        })
-                        : ""}
+                    <FormError error={error} field="body" />
+                    {!Array.isArray(error) && <p className={styles.p1}>{error}</p>}
+
                 </div>
 
                 <button

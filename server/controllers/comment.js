@@ -1,6 +1,6 @@
 import express from 'express';
-import services from '../services/crud-service.js';
-import { isOwner } from '../services/auth-service.js';
+import services from '#root/services/crud-service.js';
+import { isOwner } from '#root/services/auth-service.js';
 
 const commentController = express.Router();
 

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import CommentsRating from './ListItemsCommentsRating.jsx';
+import CommentsRating from '/src/components/partials/ListItemsCommentsRating.jsx';
 
 const styles = {
   div1: "cursor-pointer text-xs mb-3 shadow-sm rounded-lg p-2 hover:shadow-lg hover:bg-stone-50 border-1 border-gray-100 m-2 ",
@@ -17,7 +17,7 @@ function ListItems({ item }) {
   const time = new Date(item.createdAt).toLocaleTimeString();
   let commentDate;
 
-  if(item.comments.length) { 
+  if (item.comments.length) {
     commentDate = new Date(item.comments[0].createdAt).toDateString();
   }
 
@@ -40,14 +40,12 @@ function ListItems({ item }) {
           <div>
             {item.title}
           </div>
-          {item.comments.length > 0 ?
+          {item.comments.length > 0 &&
             <>
               <div className={styles.div5}>
                 Last commented by <span className="font-medium">{item.comments[0].owner.username}</span> on {commentDate}
               </div>
             </>
-            :
-            ""
           }
 
         </div>

@@ -1,5 +1,5 @@
-import Post from '../models/post.js';
-import Comment from '../models/comment.js';
+import Post from '#root/models/post.js';
+import Comment from '#root/models/comment.js';
 
 export default {
     get: {
@@ -74,6 +74,16 @@ export default {
             })
                 .sort({ createdAt: -1 })
                 .populate('owner', 'username')
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'owner',
+                        select: 'username',
+                    },
+                    options: {
+                        sort: { createdAt: -1 }
+                    }
+                })
         },
     },
     profile: {

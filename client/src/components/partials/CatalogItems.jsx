@@ -8,7 +8,7 @@ const styles = {
   span: 'md:ml-1 mr-2 pl-2 pr-2 pb-1 pt-1 text-xs font-extrabold rounded-sm bg-white text-black border-1 border-gray-400'
 }
 
-function CatalogItems() {
+function CatalogItems({ setError }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -26,6 +26,7 @@ function CatalogItems() {
     }
     catch (err) {
       console.error(err)
+      setError(err.message);
     }
   }
 

@@ -45,6 +45,11 @@ const requestOptions = (method, data) => {
 export default {
     async get(type, p1, p2, cred) {
         const req = await fetch(map[type](p1, p2), cred);
+
+        if (req.status == 204) {
+            return req;
+        }
+
         const res = await req.json();
         return res;
     },
@@ -57,7 +62,12 @@ export default {
     async crud(type, data, p1, method) {
         const req = await fetch(map[type](p1), requestOptions(method, data));
 
-        if (type == "deletePost" || type == "ratePost" || type == "deleteComment" || type == "rateComment" || type == "deleteProfile") {
+        if ((type == "deletePost" ||
+            type == "ratePost" ||
+            type == "deleteComment" ||
+            type == "rateComment" ||
+            type == "deleteProfile"
+        ) && (req.status === 201 || req.status === 200 || req.status === 204)) {
             return req;
         }
 

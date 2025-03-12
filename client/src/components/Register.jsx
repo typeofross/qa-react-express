@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from 'react-router';
 import React, { useState } from 'react';
 import services from '/services/fetch.js';
 import { styles } from '/src/components/layouts/AuthLayout.jsx';
+import FormError from '/src/components/partials/FormError.jsx';
 
 function Register() {
   const [error, setError] = useState([]);
@@ -46,13 +47,7 @@ function Register() {
             required
             className={styles.input}
           />
-          {error && error.find(x => x.path == "username") ?
-            error.map(x => {
-              if (x.path == "username") {
-                return <p className={styles.p1}>{x.error}</p>
-              }
-            })
-            : ""}
+          <FormError error={error} field="username" />
         </div>
 
         <div className="mb-4">
@@ -69,13 +64,7 @@ function Register() {
             required
             className={styles.input}
           />
-          {error && error.find(x => x.path == "email") ?
-            error.map(x => {
-              if (x.path == "email") {
-                return <p className={styles.p1}>{x.error}</p>
-              }
-            })
-            : ""}
+          <FormError error={error} field="email" />
         </div>
 
         <div className="mb-4">
@@ -91,13 +80,7 @@ function Register() {
             required
             className={styles.input}
           />
-          {error && error.find(x => x.path == "password") ?
-            error.map(x => {
-              if (x.path == "password") {
-                return <p className={styles.p1}>{x.error}</p>
-              }
-            })
-            : ""}
+          <FormError error={error} field="password" />
         </div>
 
         <div className="mb-6">
@@ -113,6 +96,8 @@ function Register() {
             required
             className={styles.input}
           />
+          <FormError error={error} field="repassword" />
+          {!Array.isArray(error) && <p className={styles.p1}>{error}</p>}
         </div>
 
         <button

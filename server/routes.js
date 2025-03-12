@@ -1,12 +1,12 @@
 import express from 'express';
-import authController from './controllers/auth.js';
-import unsupportedController from './controllers/unsupported.js';
-import postController from './controllers/post.js';
-import commentController from './controllers/comment.js';
-import getController from './controllers/get.js';
-import profileController from './controllers/profile.js';
-import sanitize from './middleware/request-sanitizer.js';
-import { isAuth, getToken } from './services/auth-service.js';
+import authController from '#root/controllers/auth.js';
+import unsupportedController from '#root/controllers/unsupported.js';
+import postController from '#root/controllers/post.js';
+import commentController from '#root/controllers/comment.js';
+import getController from '#root/controllers/get.js';
+import profileController from '#root/controllers/profile.js';
+import sanitize from '#root/middleware/request-sanitizer.js';
+import { isAuth, getToken } from '#root/services/auth-service.js';
 
 const router = express.Router();
 
