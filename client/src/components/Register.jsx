@@ -1,10 +1,12 @@
 import { NavLink, useNavigate } from 'react-router';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import services from '/services/fetch.js';
 import { styles } from '/src/components/layouts/AuthLayout.jsx';
 import FormError from '/src/components/partials/FormError.jsx';
+import { AuthContext } from '/src/contexts/AuthContext.js';
 
 function Register() {
+  const { setAuth } = useContext(AuthContext);
   const [error, setError] = useState([]);
   const [data, setData] = useState({ username: "", email: "", password: "" });
   const navigate = useNavigate();
@@ -18,6 +20,8 @@ function Register() {
         setError(response.message);
         throw new Error(response.message)
       }
+
+      setAuth({ email: data.email, isLogged: true })
 
       return navigate('/');
 

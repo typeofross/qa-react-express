@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router';
 import SearchInputField from '/src/components/partials/SearchInputField.jsx';
 import config from '/config.js';
+import { AuthContext } from '/src/contexts/AuthContext';
 
 function Header() {
-
+  const { auth } = useContext(AuthContext);
   const [menu, toggleMenu] = useState(false);
 
   const isLogged = config.getCookie();
@@ -19,7 +20,8 @@ function Header() {
     span: "hidden text-sm md:inline cursor-pointer text-gray-500 ml-3",
     navLink1: "text-xs md:text-md p-2 border-3 rounded-md tracking-widest border-emerald-200 text-emerald-700 font-medium bg-emerald-200 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white",
     navLink2: "text-xs md:text-md p-2 border-3 rounded-md tracking-widest border-blue-200 bg-blue-200 text-blue-700 hover:bg-blue-500 hover:border-blue-500 hover:text-white",
-    navLink3: "text-sm block p-1 hover:bg-slate-200"
+    navLink3: "text-sm block p-1 hover:bg-slate-200",
+    navLink4: "text-xs block p-1 hover:bg-slate-200 bg-gray-100 border-b-1 border-gray-200 rounded-t-lg"
   }
 
   return (
@@ -41,6 +43,7 @@ function Header() {
               </div>
               {menu &&
                 <div className={styles.div5}>
+                  {auth.isLogged && <NavLink to='#' className={styles.navLink4} onClick={() => toggleMenu(menu => !menu)}>Hi, {auth.email} !</NavLink>}
                   <NavLink to='/profile/activity/posts' className={styles.navLink3} onClick={() => toggleMenu(menu => !menu)}>MY ACTIVITY</NavLink>
                   <NavLink to='/profile/settings' className={styles.navLink3}>SETTINGS</NavLink>
                 </div>

@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import services from '/services/fetch.js';
+import { AuthContext } from '/src/contexts/AuthContext.js';
 
 function Logout() {
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
   useEffect(() => {
     logout()
@@ -16,6 +18,8 @@ function Logout() {
       if (response.status !== 'success') {
         throw new Error(response.message)
       }
+
+      setAuth({ email: "", isLogged: false })
 
       navigate('/');
 

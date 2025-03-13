@@ -1,9 +1,11 @@
 import { NavLink, useNavigate } from 'react-router';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import services from '/services/fetch.js';
 import { styles } from '/src/components/layouts/AuthLayout.jsx';
+import { AuthContext } from '/src/contexts/AuthContext.js';
 
 function Login() {
+  const { setAuth } = useContext(AuthContext);
   const [error, setError] = useState('');
   const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
@@ -16,6 +18,8 @@ function Login() {
       if (response.status !== 'success') {
         throw new Error(response.message)
       }
+
+      setAuth({ email: data.email, isLogged: true })
 
       return navigate('/');
 
