@@ -1,5 +1,5 @@
 import { NavLink, useNavigate, useParams } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import services from '/services/fetch.js';
 import config from '/config.js';
 import ProfileListPosts from '/src/components/partials/ProfileListPosts.jsx';
@@ -7,6 +7,7 @@ import ProfileListComments from '/src/components/partials/ProfileListComments.js
 import ProfileListRated from '/src/components/partials/ProfileListRated.jsx';
 import NoPostsToShow from '/src/components/partials/NoPostsToShow.jsx';
 import ErrorToast from '/src/components/partials/ErrorToast.jsx';
+import useRequest from '/src/hooks/useRequest';
 
 function Activity() {
     const map = {
@@ -14,43 +15,22 @@ function Activity() {
         "comments": "profileComments",
         "rated": "profileRatings"
     }
-
-    const [msg, setMsg] = useState(false);
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(false);
-    const [refresh, triggerRefresh] = useState(false);
-    const navigate = useNavigate();
     const type = map[useParams().type];
+    const [refresh, triggerRefresh] = useState(false);
 
-    useEffect(() => {
-        get();
+    const request = {
+        "type": type,
+        data: {
+            cred: { credentials: 'include' }
+        },
+        state: refresh
+    }
 
-        if (!config.getCookie()) {
-            return navigate('/login');
-        }
+    const [response, content, error] = useRequest(request);
+    const navigate = useNavigate();
 
-    }, [type, refresh])
-
-    const get = async () => {
-        try {
-            setData([])
-            setMsg(false);
-            const response = await services.get(type, "", "", { credentials: 'include' });
-
-            if (response.status === 204) {
-                return setMsg(true);
-            }
-
-            if (response.status !== "success") {
-                throw new Error(response.message);
-            }
-
-            setData(response.message);
-
-        } catch (err) {
-            console.error(err)
-            setError(err.message);
-        }
+    if (!config.getCookie()) {
+        return navigate('/login');
     }
 
     const deleteHandler = async (id) => {
@@ -76,10 +56,6 @@ function Activity() {
         navLink3: "inline-block p-2 border-1 border-green-200 rounded-lg m-2 ml-0 w-fit text-xs hover:bg-green-200 bg-green-100 text-green-900"
     }
 
-    if (!data) {
-        return null;
-    }
-
     return (
         <>
             <title>Activity</title>
@@ -94,13 +70,13 @@ function Activity() {
                 </div>
             </div>
 
-            {msg && <NoPostsToShow />}
+            {!content && <NoPostsToShow />}
 
-            {error && <ErrorToast error={error} setError={setError} />}
+            {error && <ErrorToast error={error} />}
 
             <div className="mt-5 mb-5">
-                {type == "profilePosts" &&
-                    data.map(item =>
+                {type == "profilePosts" && response.message &&
+                    response.message.map(item =>
                         <ProfileListPosts
                             key={item._id}
                             item={item}
@@ -109,8 +85,8 @@ function Activity() {
                     )
                 }
 
-                {type == "profileComments" &&
-                    data.map(item =>
+                {type == "profileComments" && response.message &&
+                    response.message.map(item =>
                         <ProfileListComments
                             key={item._id}
                             item={item}
@@ -118,8 +94,8 @@ function Activity() {
                     )
                 }
 
-                {type == "profileRatings" &&
-                    data.map(item =>
+                {type == "profileRatings" && response.message &&
+                    response.message.map(item =>
                         <ProfileListRated
                             key={item._id}
                             item={item}

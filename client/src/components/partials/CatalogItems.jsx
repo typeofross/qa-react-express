@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import services from '/services/fetch.js';
+import React from 'react';
 import { NavLink } from 'react-router';
+import ErrorToast from '/src/components/partials/ErrorToast.jsx';
+import useRequest from '/src/hooks/useRequest.js';
 
 const styles = {
   div: 'grid grid-cols-[1fr_1fr_1fr] md:block',
@@ -8,32 +9,18 @@ const styles = {
   span: 'md:ml-1 mr-2 pl-2 pr-2 pb-1 pt-1 text-xs font-extrabold rounded-sm bg-white text-black border-1 border-gray-400'
 }
 
-function CatalogItems({ setError }) {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    getCatalog()
-  }, [])
-
-  const getCatalog = async () => {
-    try {
-      const response = await services.get('catalog');
-
-      if (response.status !== 'success') {
-        throw new Error(response.message)
-      }
-      setData(response.message);
-    }
-    catch (err) {
-      console.error(err)
-      setError(err.message);
-    }
+function CatalogItems() {
+  const request = {
+    type: "catalog",
   }
+  const [response, content, error] = useRequest(request);
 
   return (
     <>
+      {error && <ErrorToast error={error} />}
+
       <div className={styles.div}>
-        {data.map(entry => {
+        {response.message && response.message.map(entry => {
 
           return <div key={entry._id}>
             <NavLink

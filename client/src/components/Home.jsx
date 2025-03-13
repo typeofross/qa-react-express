@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import services from '/services/fetch.js';
+import React from 'react';
 import ListItems from '/src/components/partials/ListItems.jsx';
 import CatalogItems from '/src/components/partials/CatalogItems.jsx';
 import NoPostsToShow from '/src/components/partials/NoPostsToShow.jsx';
-import ErrorToast from './partials/ErrorToast.jsx';
+import ErrorToast from '/src/components/partials/ErrorToast.jsx';
+import useRequest from '/src/hooks/useRequest.js';
 
 const styles = {
   div1: "grid grid-cols-1 md:grid-cols-[200px_auto] h-full gap-3",
@@ -11,52 +11,25 @@ const styles = {
   div3: "md:overflow-y-auto custom-scrollbar",
 }
 function Home() {
-  const [data, setData] = useState([]);
-  const [msg, setMsg] = useState(false);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    getLatest()
-  }, [])
-
-  const getLatest = async () => {
-    try {
-      const response = await services.get('latest');
-
-      if (response.status === 204) {
-        return setMsg(true);
-      }
-
-      if (response.status !== 'success') {
-        throw new Error(response.message)
-      }
-
-      setData(response.message);
-
-    } catch (err) {
-      console.error(err)
-
-      if (!data.message) {
-        setError(err.message);
-      }
-    }
-
+  const request = {
+    type: "latest",
   }
+  const [response, content, error] = useRequest(request);
 
   return (
     <>
       <title>Home</title>
       <div className={styles.div1}>
         <div className={styles.div2}>
-          <CatalogItems setError={setError} />
+          <CatalogItems />
         </div>
         <div className={styles.div3}>
 
-          {msg && <NoPostsToShow />}
-
           {error && <ErrorToast error={error} />}
 
-          {data.map(item =>
+          {!content && <NoPostsToShow />}
+
+          {response.message && response.message.map(item =>
             <ListItems
               key={item._id}
               item={item}

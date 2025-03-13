@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router";
 import Home from '/src/components/Home.jsx'
@@ -15,7 +16,6 @@ import Logout from '/src/components/Logout.jsx';
 import Update from '/src/components/Update.jsx';
 import ProfileSettings from '/src/components/ProfileSettings.jsx';
 import Activity from '/src/components/Activity.jsx';
-import { StrictMode } from 'react';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

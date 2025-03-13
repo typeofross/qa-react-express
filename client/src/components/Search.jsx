@@ -1,53 +1,31 @@
-import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import services from '/services/fetch.js';
 import ListItems from "/src/components/partials/ListItems.jsx";
 import NoPostsToShow from "/src/components/partials/NoPostsToShow.jsx";
 import ErrorToast from "/src/components/partials/ErrorToast.jsx";
+import useRequest from "/src/hooks/useRequest.js";
 
 function Search() {
   const location = useLocation();
   let searchValue = location.state?.searchValue;
 
-  const [data, setData] = useState([]);
-  const [msg, setMsg] = useState(false);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    getSearch()
-  }, [searchValue])
-
-  const getSearch = async () => {
-    try {
-      const response = await services.get('search', searchValue);
-
-      if (response.status === 204) {
-        setMsg(true);
-      }
-
-      if (response.status !== 'success') {
-        throw new Error(response.message)
-      }
-
-      setMsg(false);
-      setData(response.message);
-
-    } catch (err) {
-      setData([])
-      console.error(err)
-      setError(err.message);
-    }
+  const request = {
+    "type": "search",
+    data: {
+      p1: searchValue
+    },
+    state: searchValue
   }
+  const [response, content, error] = useRequest(request);
 
   return (
     <>
       <title>Search</title>
 
-      {error && <ErrorToast error={error} setError={setError} />}
+      {error && <ErrorToast error={error} />}
 
-      {msg && <NoPostsToShow />}
+      {!content && <NoPostsToShow />}
 
-      {data && data.map(item =>
+      {response.message && response.message.map(item =>
         <ListItems
           key={item._id}
           item={item}

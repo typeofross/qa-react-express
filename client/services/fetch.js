@@ -1,11 +1,7 @@
 import endpoints from '/config.js';
 
 const map = {
-    latest: () => { return endpoints.get.latest },
-    catalog: () => { return endpoints.get.catalog },
     post: (id) => { return endpoints.get.post + id },
-    search: (text) => { return endpoints.get.search + text },
-    category: (name, page) => { return endpoints.get.category + name + "/page/" + page },
 
     login: () => { return endpoints.auth.login },
     register: () => { return endpoints.auth.register },
@@ -22,10 +18,6 @@ const map = {
 
     updateProfile: () => { return endpoints.profile.update },
     deleteProfile: () => { return endpoints.profile.delete },
-
-    profilePosts: () => { return endpoints.profile.activity + 'posts' },
-    profileComments: () => { return endpoints.profile.activity + 'comments' },
-    profileRatings: () => { return endpoints.profile.activity + 'rated' }
 }
 
 const requestOptions = (method, data) => {
@@ -45,11 +37,6 @@ const requestOptions = (method, data) => {
 export default {
     async get(type, p1, p2, cred) {
         const req = await fetch(map[type](p1, p2), cred);
-
-        if (req.status == 204) {
-            return req;
-        }
-
         const res = await req.json();
         return res;
     },

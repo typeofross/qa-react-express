@@ -1,42 +1,30 @@
 import { NavLink, useNavigate, useParams } from 'react-router';
-import { useEffect, useState } from 'react';
 import ListItems from '/src/components/partials/ListItems.jsx';
-import services from '/services/fetch.js';
 import Pagination from '/src/components/partials/Pagination.jsx';
+import useRequest from '/src/hooks/useRequest';
+import ErrorToast from '/src/components/partials/ErrorToast.jsx';
+import NoPostsToShow from '/src/components/partials/NoPostsToShow.jsx';
 
 function Category() {
   const params = useParams();
   const navigate = useNavigate();
-  const [data, setData] = useState('');
 
-  useEffect(() => {
-    getCategory()
-  }, [params.number])
+  const request = {
+    type: "category",
+    data: {
+      p1: params.name,
+      p2: params.number
+    },
+    state: params.number
+  }
+
+  const [response, content, error] = useRequest(request);
 
   const handlePageChange = (page) => {
     navigate(`/category/${params.name}/page/${page}`);
   };
 
-  const getCategory = async () => {
-    try {
-      const response = await services.get('category', params.name, params.number);
-
-      if (response.status !== 'success') {
-        throw new Error(response.message)
-      }
-      setData(response);
-    }
-    catch (err) {
-      navigate('/404');
-      console.error(err)
-    }
-  }
-
-  const totalPages = Math.ceil(data.posts / data.limit);
-
-  if (!data) {
-    return "Loading..."
-  }
+  const totalPages = Math.ceil(response.posts / response.limit);
 
   const styles = {
     div1: "grid grid-cols-[200px_auto] sticky top-0 bg-white",
@@ -62,7 +50,11 @@ function Category() {
       </div>
 
       <div className="mt-5">
-        {data.message.map(item =>
+        {error && <ErrorToast error={error} />}
+
+        {!content && <NoPostsToShow />}
+
+        {response.message && response.message.map(item =>
           <ListItems
             key={item._id}
             item={item} />
