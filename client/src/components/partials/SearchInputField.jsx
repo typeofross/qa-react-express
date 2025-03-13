@@ -1,8 +1,9 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router";
 
 function SearchInputField() {
   const timeoutId = useRef(null);
+  const searchInputRef = useRef(null);
   const navigate = useNavigate();
 
   const onInputChangeHandler = (e) => {
@@ -23,6 +24,23 @@ function SearchInputField() {
 
   }
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.ctrlKey && event.key == 'k') {
+        event.preventDefault();
+        if (searchInputRef.current) {
+          searchInputRef.current.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   const styles = {
     input: "w-full rounded-md py-2 ps-3 pe-10 bg-white text-sm shadow-xs focus:outline-none focus:border-none text-center text-xs tracking-widest",
     span: "absolute end-1 inset-y-0 grid w-7 place-content-center",
@@ -38,6 +56,7 @@ function SearchInputField() {
           name="search"
           onChange={onInputChangeHandler}
           placeholder="Search (Ctrl+K)"
+          ref={searchInputRef}
           autoComplete="off"
           className={styles.input}
         />
