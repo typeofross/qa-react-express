@@ -7,7 +7,7 @@ authController.post('/register', async (req, res, next) => {
     try {
         const accessToken = await register(req.body);
 
-        res.cookie('accessToken', accessToken);
+        res.cookie('access_token', accessToken);
         res.status(201).json({ "status": "success" });
     }
     catch (err) {
@@ -19,7 +19,7 @@ authController.post('/login', async (req, res, next) => {
     try {
         const accessToken = await login(req.body);
 
-        res.cookie('accessToken', accessToken);
+        res.cookie('access_token', accessToken);
         res.status(200).json({ "status": "success" });
     }
     catch (err) {
@@ -29,7 +29,7 @@ authController.post('/login', async (req, res, next) => {
 
 authController.get('/logout', async (req, res, next) => {
     try {
-        res.clearCookie('accessToken');
+        res.clearCookie('access_token');
         res.status(200).json({ "status": "success" });
     }
     catch (err) {

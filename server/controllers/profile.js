@@ -56,7 +56,7 @@ profileController.delete('/delete', async (req, res, next) => {
     try {
         await deleteUser(res.locals.userId);
 
-        res.clearCookie('accessToken');
+        res.clearCookie('access_token');
         res.status(204).json({ "status": "success" });
     }
     catch (err) {

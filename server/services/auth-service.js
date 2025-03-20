@@ -215,8 +215,8 @@ async function deleteUser(id) {
 
 export function getToken(req, res, next) {
     try {
-        if (req.cookies.accessToken) {
-            const userId = jwt.verify(req.cookies.accessToken, config.jwtSecret);
+        if (req.cookies['access_token']) {
+            const userId = jwt.verify(req.cookies['access_token'], config.jwtSecret);
             res.locals['userId'] = userId.data;
         }
         else {
@@ -234,11 +234,11 @@ export function getToken(req, res, next) {
 }
 
 export function isAuth(req, res, next) {
-    if (!req.cookies.accessToken) {
+    if (!req.cookies['access_token']) {
         throw new Error('Unauthorized.');
     }
 
-    const userId = jwt.verify(req.cookies.accessToken, config.jwtSecret);
+    const userId = jwt.verify(req.cookies['access_token'], config.jwtSecret);
 
     res.locals['userId'] = userId.data;
 

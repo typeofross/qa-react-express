@@ -27,6 +27,13 @@ export default {
         activity: serverBaseUrl + "/profile/activity/"
     },
     getCookie() {
-        return document.cookie.replace('accessToken=');
+        const cookies = document.cookie.split(";");
+        const accessToken = cookies.find(x => x.includes('access_token'));
+
+        if (!accessToken) {
+            return false;
+        }
+
+        return accessToken.replace('access_token=');
     }
 }
