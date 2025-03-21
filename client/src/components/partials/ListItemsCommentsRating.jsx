@@ -10,7 +10,7 @@ function CommentsRating({ item }) {
     return (
         <>
             <div className={styles.div}>
-                {item.likes.length == 0 || item.dislikes.length == 0 &&
+                {(item.likes.length > 0 || item.dislikes.length > 0) &&
                     <>
                         <span className={styles.span1}>{item.likes.length} <span className="text-emerald-700">▲</span></span>
                         <span className={styles.span2}>{item.dislikes.length} <span className="text-rose-800">▼</span></span>
